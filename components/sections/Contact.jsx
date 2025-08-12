@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { FaFacebookF, FaInstagram, FaGithub, FaEnvelope } from "react-icons/fa";
-import { FiArrowRight } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -100,15 +99,15 @@ export default function Contact() {
 
         <div ref={(el) => (elementsRef.current[3] = el)} className="mt-8">
           <a
-            href="mailto:your.email@example.com"
+            href="https://www.instagram.com/gourav_maurya1/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 border border-gray-500 rounded-lg hover:bg-gray-800 transition-colors"
           >
-            Let's Chat <FiArrowRight />
+            Let&apos;s Chat <FaInstagram className="text-pink-500" />
           </a>
         </div>
       </div>
-
-     
     </section>
   );
 }

@@ -14,7 +14,7 @@ const projectsData = [
       "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
     tags: ["React.js", "Firebase", "Gemini API", "Google Place API", "Tailwind CSS"],
     image: "/safar.png",
-    github: "https://github.com/Gouravmaurya/safar-ai",
+    github: "https://github.com/Gouravmaurya/",
     live: "https://safarai.in",
     showGithub: false, // ✅ control visibility
     showLive: true, // ✅ control visibility
@@ -26,7 +26,7 @@ const projectsData = [
     description:
       "An AI-powered social media management tool that automates content creation, scheduling, and engagement across multiple platforms.",
     tags: ["React.js", "Firebase", "Hugging Face", "Twitter API", "Node.js"],
-    image: "/ai-agent.webp",
+    image: "/Ai-agent.webp",
     github: "https://github.com/Gouravmaurya/ai-social-agent",
     live: "https://ai-social-agent.vercel.app",
     showGithub: true, // ❌ GitHub hidden
@@ -40,7 +40,7 @@ const projectsData = [
       "A collaborative task management application with real-time updates, team collaboration features, and intuitive task organization.",
     tags: ["Next.js", "Express.js", "MongoDB", "Socket.IO", "JWT"],
     image: "/task-zen.jpeg",
-    github: "https://github.com/Gouravmaurya/task-zen",
+    github: "https://github.com/Gouravmaurya/TaskManager",
     live: "https://task-zen.vercel.app",
     showGithub: true,
     showLive: false,
@@ -53,7 +53,7 @@ const projectsData = [
       "A modern, responsive portfolio website built with Next.js, Tailwind CSS, and GSAP for smooth animations and transitions.",
     tags: ["Next.js", "Tailwind CSS", "GSAP", "Framer Motion", "Responsive Design"],
     image: "/portfolio1.png",
-    github: "https://github.com/Gouravmaurya/portfolio",
+    github: "https://github.com/Gouravmaurya/Portfolio",
     live: "https://gouravmaurya.vercel.app",
     showGithub: true,
     showLive: true,
