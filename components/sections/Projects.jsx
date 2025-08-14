@@ -124,7 +124,7 @@ export default function Projects() {
         {/* Heading */}
         <div className="text-center mb-14 relative">
           <h2 className="text-[2.7rem] sm:text-5xl md:text-[6rem] font-bold tracking-tight">
-            Featured Projects
+            Projects
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl">
             A selection of my recent work, showcasing problem-solving skills,

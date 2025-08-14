@@ -53,7 +53,7 @@ export default function FloatingDock({ isScrolled }) {
     <>
       {/* Mobile top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
-        <div className="flex items-center justify-between h-12 px-4 bg-black/90 backdrop-blur">
+        <div className="flex items-center justify-between h-12 px-4 bg-black backdrop-blur">
           <span className="text-white tracking-[0.25em] font-semibold text-sm">{brand}</span>
           <button
             aria-label="Open navigation"

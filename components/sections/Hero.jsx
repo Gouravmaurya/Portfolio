@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { FiGithub, FiLinkedin, FiMail, FiDownload, FiCheck } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiDownload, FiCheck, FiCopy } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +30,7 @@ export default function Hero() {
   const socialRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const EMAIL = "gouravmaurya351@gmail.com";
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
     // Intro heading animation (runs once on load)
@@ -95,10 +96,20 @@ export default function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="flex items-center justify-center min-h-screen relative overflow-hidden bg-black text-white"
+      className="flex items-center justify-center min-h-screen relative overflow-hidden bg-black text-white pt-32"
     >
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
+          {/* Availability Badge */}
+          <div className="flex justify-center mb-6">
+            <span className="inline-flex items-center gap-3 text-white/90">
+              <span className="relative flex h-3 w-3">
+                <span className="absolute inset-0 rounded-full bg-emerald-400/60 blur-[2px] animate-pulse"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 ring-2 ring-emerald-400/40"></span>
+              </span>
+              <span className="tracking-wide font-semibold">Available For Work</span>
+            </span>
+          </div>
 
           {/* Heading */}
           <h1
@@ -117,21 +128,49 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-wrap justify-center gap-6 mb-16">
-           
+            
             <a
               href="/Gourav_Maurya WebDeveloper_Resume.pdf"
               download
-              className="px-8 py-4 border border-white/30 text-white font-medium rounded-lg hover:bg-white hover:text-black transition-all duration-300 flex items-center space-x-2"
+              className="px-8 py-4 border border-white/30 text-white font-medium rounded-full hover:bg-white hover:text-black transition-all duration-300 flex items-center space-x-2"
             >
               <span>View Resume</span>
               <FiDownload className="w-4 h-4" />
             </a>
+
+            {/* Email copy CTA */}
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(EMAIL);
+                  setCopiedEmail(true);
+                  setTimeout(() => setCopiedEmail(false), 1500);
+                } catch (e) {
+                  // Fallback if clipboard not available
+                  window.location.href = `mailto:${EMAIL}`;
+                }
+              }}
+              title={`Copy ${EMAIL}`}
+              className="group inline-flex items-center gap-3 px-5 py-4 text-white/60 hover:text-white hover:border-white/60 transition-all duration-300"
+            >
+              <span className="relative grid place-items-center w-4 h-4 rounded-full  text-white shadow ring-1 ring-black/10">
+                {copiedEmail ? (
+                  <FiCheck className="w-4 h-4 text-green-600" />
+                ) : (
+                  <FiCopy className="w-4 h-4" />
+                )}
+              </span>
+              <span className="tracking-wide font-medium">
+                {copiedEmail ? "gouravmaurya351@gmail.com" : EMAIL}
+              </span>
+            </button>
           </div>
 
           {/* Social Links on Right Side */}
           <div
             ref={socialRef}
-            className="hidden md:flex flex-col items-center space-y-6 fixed right-0 mr-6 top-1/2 -translate-y-1/2 z-50"
+            className="hidden md:flex flex-col items-center space-y-6 fixed right-0 mr-6 top-1/2 -translate-y-1/2 z-[60]"
           >
             <span className="w-px h-12 bg-gray-500/40"></span>
             {socialLinks.map((social) => (
