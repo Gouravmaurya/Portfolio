@@ -64,11 +64,14 @@ export default function About() {
     >
       {/* Big faded background text - static now */}
       <h1
-        className="absolute  w-full top-4 left-[75%] -translate-x-[50%] text-[8rem] md:text-[10rem] font-bold tracking-tight pointer-events-none select-none z-0"
+        className="absolute inset-0 font-mono flex items-start top-16 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+                   bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+                   bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
         style={{
-          color: "silver",
-          opacity: 0.25,
+          opacity: 0.12,
           WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
         }}
       >
         ABOUT ME
@@ -77,7 +80,7 @@ export default function About() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         {/* Heading */}
         <div ref={headingRef} className="text-center mb-16">
-          <h2 className="text-5xl md:text-[6rem] font-bold">About Me</h2>
+          <h2 className="text-[3rem] md:text-[6rem] font-bold">About Me</h2>
           <p className="text-gray-400 tracking-widest text-sm mt-2">
             GET TO KNOW ME
           </p>
@@ -85,7 +88,7 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
           {/* Right Column - Content */}
-          <div ref={contentRef} className="lg:col-span-2 space-y-6">
+          <div ref={contentRef} className="lg:col-span-2 px-6 space-y-6">
             <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
               Hello! I'm a passionate{" "}
               <span className="text-white font-semibold">

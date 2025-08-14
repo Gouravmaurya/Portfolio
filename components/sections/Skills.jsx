@@ -64,16 +64,18 @@ export default function Skills() {
       id="skills"
       className="py-24 bg-black text-white relative overflow-hidden"
     >
-          {/* Big faded text background */}
-          <h1
-        className="absolute inset-0 flex items-start -top-2 justify-center text-[12rem] font-bold
-                   bg-gradient-to-r from-gray-600/60  via-gray-200/ to-white
-                   bg-clip-text text-transparent opacity-60 tracking-tighter 
-                   select-none pointer-events-none z-0"
+      {/* Big faded text background */}
+      <h1
+        className="absolute inset-0 font-mono flex items-start top-16 sm:-top-8 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+       bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+       bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
         style={{
-          color: "silver",
-          opacity: 0.1,
+          opacity: 0.12,
           WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          maskImage:
+            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
         }}
       >
         SKILLS
@@ -88,7 +90,9 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[6rem] font-bold">Skills</h2>
+          <h2 className="text-[3rem] sm:text-5xl md:text-[6rem] font-bold">
+            Skills
+          </h2>
           <p className="text-gray-400 mt-4 tracking-widest">
             I CONSTANTLY TRY TO IMPROVE
           </p>
@@ -96,7 +100,7 @@ export default function Skills() {
 
         {/* Skills Grid */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3"
+          className="flex flex-wrap justify-center gap-3 px-4"
           variants={container}
           initial="hidden"
           whileInView="visible"

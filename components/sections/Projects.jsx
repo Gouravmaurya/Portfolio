@@ -12,7 +12,13 @@ const projectsData = [
     title: "Safar AI – AI Trip Planner",
     description:
       "An intelligent trip planning application that uses AI to create personalized travel itineraries based on user preferences, budget, and interests.",
-    tags: ["React.js", "Firebase", "Gemini API", "Google Place API", "Tailwind CSS"],
+    tags: [
+      "React.js",
+      "Firebase",
+      "Gemini API",
+      "Google Place API",
+      "Tailwind CSS",
+    ],
     image: "/safar.png",
     github: "https://github.com/Gouravmaurya/",
     live: "https://safarai.in",
@@ -51,7 +57,13 @@ const projectsData = [
     title: "Portfolio Website (This Site)",
     description:
       "A modern, responsive portfolio website built with Next.js, Tailwind CSS, and GSAP for smooth animations and transitions.",
-    tags: ["Next.js", "Tailwind CSS", "GSAP", "Framer Motion", "Responsive Design"],
+    tags: [
+      "Next.js",
+      "Tailwind CSS",
+      "GSAP",
+      "Framer Motion",
+      "Responsive Design",
+    ],
     image: "/portfolio1.png",
     github: "https://github.com/Gouravmaurya/Portfolio",
     live: "https://gouravmaurya.vercel.app",
@@ -94,14 +106,16 @@ export default function Projects() {
       <div className="container mx-auto px-4">
         {/* Big faded background text */}
         <h1
-          className="absolute inset-0 flex items-start -top-8 justify-center text-[12rem] font-bold
-                   bg-gradient-to-r from-gray-600/60 via-gray-200/ to-white
-                   bg-clip-text text-transparent opacity-60 tracking-tighter 
-                   select-none pointer-events-none z-0"
+          className="absolute inset-0 font-mono flex items-start top-10 sm:-top-8 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+           bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+           bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
           style={{
-            color: "silver",
-            opacity: 0.1,
+            opacity: 0.12,
             WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+            maskImage:
+              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           }}
         >
           PROJECTS
@@ -109,10 +123,10 @@ export default function Projects() {
 
         {/* Heading */}
         <div className="text-center mb-14 relative">
-          <h2 className="text-4xl md:text-[6rem] font-bold tracking-tight">
+          <h2 className="text-[2.7rem] sm:text-5xl md:text-[6rem] font-bold tracking-tight">
             Featured Projects
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-xl">
+          <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl">
             A selection of my recent work, showcasing problem-solving skills,
             creativity, and technical expertise.
           </p>
@@ -124,7 +138,7 @@ export default function Projects() {
             <div
               key={project.id}
               ref={(el) => (cardsRef.current[index] = el)}
-              className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12"
+              className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 px-6"
             >
               {/* Image */}
               <div className="relative w-full lg:w-1/2 h-64 lg:h-80 rounded-xl overflow-hidden border border-gray-800 group shadow-lg">
@@ -213,7 +227,7 @@ export default function Projects() {
         </div>
 
         {/* Footer */}
-        <div className="mt-24 text-center">
+        <div className="mt-24 text-center px-6">
           <p className="text-gray-400 mb-6">
             Explore more projects and open-source contributions on my GitHub.
           </p>

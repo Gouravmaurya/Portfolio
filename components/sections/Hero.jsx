@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { FiGithub, FiLinkedin, FiMail, FiDownload } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiDownload, FiCheck } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,6 +28,8 @@ export default function Hero() {
   const textRef = useRef(null);
   const ctaRef = useRef(null);
   const socialRef = useRef(null);
+  const [copied, setCopied] = useState(false);
+  const EMAIL = "gouravmaurya351@gmail.com";
 
   useEffect(() => {
     // Intro heading animation (runs once on load)
@@ -101,7 +103,7 @@ export default function Hero() {
           {/* Heading */}
           <h1
             ref={textRef}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
           >
             Hi, I’m <span className="text-white">Gourav Maurya</span>
             <br />
@@ -115,13 +117,7 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-wrap justify-center gap-6 mb-16">
-            <a
-              href="https://www.linkedin.com/in/gourav-maurya-a39969226/"
-              target="_blank"
-              className="px-8 py-4 bg-white text-black font-medium rounded-lg border border-white/20 shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-300"
-            >
-              Let’s Connect
-            </a>
+           
             <a
               href="/Gourav_Maurya WebDeveloper_Resume.pdf"
               download
@@ -139,16 +135,38 @@ export default function Hero() {
           >
             <span className="w-px h-12 bg-gray-500/40"></span>
             {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
-                aria-label={social.name}
-              >
-                {social.icon}
-              </a>
+              social.name === "Email" ? (
+                <button
+                  key={social.name}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(EMAIL);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 1500);
+                    } catch (e) {
+                      // Fallback: open mailto if clipboard not available
+                      window.location.href = social.href;
+                    }
+                  }}
+                  title={`Copy ${EMAIL}`}
+                  className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
+                  aria-label="Copy email to clipboard"
+                >
+                  {copied ? <FiCheck className="w-6 h-6 text-green-400" /> : social.icon}
+                </button>
+              ) : (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
+                  aria-label={social.name}
+                >
+                  {social.icon}
+                </a>
+              )
             ))}
             <span className="w-px h-12 bg-gray-500/40"></span>
           </div>

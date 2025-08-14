@@ -60,11 +60,16 @@ export default function Contact() {
     >
       {/* Big faded background text */}
       <h1
-        className="bg-contact-text absolute -top-4 left-1/2 -translate-x-1/2 text-[10rem] md:text-[12rem] font-bold tracking-tighter pointer-events-none select-none z-0"
-        style={{
-          color: "silver",
-          opacity: 0.08,
-          WebkitTextStroke: "1px rgba(192,192,192,0.3)",
+         className="absolute inset-0 font-mono flex items-start top-12 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+         bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+         bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
+style={{
+opacity: 0.12,
+WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          maskImage:
+            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
         }}
       >
         CONTACT
@@ -74,7 +79,7 @@ export default function Contact() {
       <div className="relative z-10 text-center max-w-2xl mx-auto">
         <h2
           ref={(el) => (elementsRef.current[0] = el)}
-          className="text-4xl md:text-[6rem] font-bold mb-4"
+          className="text-[3rem] sm:text-5xl md:text-[6rem] font-bold mb-4"
         >
           Contact
         </h2>
@@ -87,7 +92,7 @@ export default function Contact() {
 
         <div
           ref={(el) => (elementsRef.current[2] = el)}
-          className="text-gray-300 leading-relaxed space-y-2 text-lg"
+          className="text-gray-300 leading-relaxed space-y-2 text-lg px-8"
         >
           <p>I'm Available For Full-time Roles & Freelance Projects.</p>
           <p>My Inbox Is Always Open,</p>
