@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* * {
+    cursor: none;
+  }
+   */
+/* globals.css */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
