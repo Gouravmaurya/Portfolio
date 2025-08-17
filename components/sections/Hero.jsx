@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { TextPlugin } from "gsap/dist/TextPlugin";
 import { FiGithub, FiLinkedin, FiMail, FiDownload, FiCheck, FiCopy } from "react-icons/fi";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const socialLinks = [
   {
@@ -26,6 +27,8 @@ const socialLinks = [
 export default function Hero() {
   const heroRef = useRef(null);
   const textRef = useRef(null);
+  const nameRef = useRef(null);
+  const roleRef = useRef(null);
   const ctaRef = useRef(null);
   const socialRef = useRef(null);
   const [copied, setCopied] = useState(false);
@@ -33,26 +36,79 @@ export default function Hero() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
-    // Intro heading animation (runs once on load)
-    const introTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    introTl
-      .from(textRef.current.children, {
-        y: 50,
-        opacity: 0,
-        stagger: 0.05,
-        duration: 0.8,
-      })
-      .from(".tagline", { opacity: 0, y: 20, duration: 0.6 }, "-=0.4");
+    // Animate name letters smoothly
+    const name = nameRef.current;
+    const letters = name.textContent.split("");
+    name.innerHTML = letters
+      .map((l) => `<span class="inline-block opacity-0 translate-y-6">${l}</span>`)
+      .join("");
 
-    // CTA buttons scroll-triggered (replay when section comes into view)
+    gsap.to(name.querySelectorAll("span"), {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.08,
+      ease: "power3.out",
+    });
+
+    // Roles cycle with smoother vanish effect
+    const roles = ["Full-Stack Developer", "MERN Stack Developer", "Web Developer"];
+    let roleIndex = 0;
+
+    const changeRole = () => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          roleIndex = (roleIndex + 1) % roles.length;
+          setTimeout(changeRole, 2500); // wait before next change
+        },
+      });
+
+      tl.to(roleRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: "power2.inOut",
+        onComplete: () => {
+          gsap.set(roleRef.current, { text: roles[roleIndex] });
+        },
+      }).to(roleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+    };
+
+    changeRole();
+
+    // Intro heading animation
+    gsap.from(textRef.current.children, {
+      y: 60,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 1.2,
+      ease: "power3.out",
+    });
+
+    // Tagline fade-in
+    gsap.from(".tagline", {
+      opacity: 0,
+      y: 25,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.6,
+    });
+
+    // CTA buttons (smooth fade & rise)
     gsap.fromTo(
       ctaRef.current.children,
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.1,
-        duration: 0.6,
+        stagger: 0.15,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top 80%",
@@ -61,15 +117,16 @@ export default function Hero() {
       }
     );
 
-    // Social links scroll-triggered
+    // Social links (slide in smoothly)
     gsap.fromTo(
       socialRef.current.children,
-      { x: 20, opacity: 0 },
+      { x: 30, opacity: 0 },
       {
         x: 0,
         opacity: 1,
-        stagger: 0.1,
-        duration: 0.6,
+        stagger: 0.15,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top 80%",
@@ -78,15 +135,15 @@ export default function Hero() {
       }
     );
 
-    // Parallax effect for hero background
+    // Smooth parallax effect
     if (window.innerWidth > 768) {
       gsap.to(heroRef.current, {
-        y: "8%",
+        y: "6%",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: 1,
+          scrub: 1.2,
         },
       });
     }
@@ -104,7 +161,7 @@ export default function Hero() {
           <div className="flex justify-center mb-6">
             <span className="inline-flex items-center gap-3 text-white/90">
               <span className="relative flex h-3 w-3">
-                <span className="absolute inset-0 rounded-full bg-emerald-400/60 blur-[2px] animate-pulse"></span>
+                <span className="absolute inset-0 rounded-full bg-emerald-400/60 blur-[3px] animate-pulse"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 ring-2 ring-emerald-400/40"></span>
               </span>
               <span className="tracking-wide font-semibold">Available For Work</span>
@@ -116,9 +173,14 @@ export default function Hero() {
             ref={textRef}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
           >
-            Hi, I’m <span className="text-white">Gourav Maurya</span>
+            Hi, I’m{" "}
+            <span ref={nameRef} className="inline-block text-white font-bold tracking-wide">
+              Gourav Maurya
+            </span>
             <br />
-            <span className="text-gray-400 font-light">Full-Stack Developer</span>
+            <span ref={roleRef} className="text-gray-400 font-light">
+              Full-Stack Developer
+            </span>
           </h1>
 
           {/* Tagline */}
@@ -128,7 +190,6 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-wrap justify-center gap-6 mb-16">
-            
             <a
               href="/Gourav_Maurya WebDeveloper_Resume.pdf"
               download
@@ -147,14 +208,13 @@ export default function Hero() {
                   setCopiedEmail(true);
                   setTimeout(() => setCopiedEmail(false), 1500);
                 } catch (e) {
-                  // Fallback if clipboard not available
                   window.location.href = `mailto:${EMAIL}`;
                 }
               }}
               title={`Copy ${EMAIL}`}
               className="group inline-flex items-center gap-3 px-5 py-4 text-white/60 hover:text-white hover:border-white/60 transition-all duration-300"
             >
-              <span className="relative grid place-items-center w-4 h-4 rounded-full  text-white shadow ring-1 ring-black/10">
+              <span className="relative grid place-items-center w-4 h-4 rounded-full text-white shadow ring-1 ring-black/10">
                 {copiedEmail ? (
                   <FiCheck className="w-4 h-4 text-green-600" />
                 ) : (
@@ -167,13 +227,13 @@ export default function Hero() {
             </button>
           </div>
 
-          {/* Social Links on Right Side */}
+          {/* Social Links */}
           <div
             ref={socialRef}
             className="hidden md:flex flex-col items-center space-y-6 fixed right-0 mr-6 top-1/2 -translate-y-1/2 z-[60]"
           >
             <span className="w-px h-12 bg-gray-500/40"></span>
-            {socialLinks.map((social) => (
+            {socialLinks.map((social) =>
               social.name === "Email" ? (
                 <button
                   key={social.name}
@@ -184,7 +244,6 @@ export default function Hero() {
                       setCopied(true);
                       setTimeout(() => setCopied(false), 1500);
                     } catch (e) {
-                      // Fallback: open mailto if clipboard not available
                       window.location.href = social.href;
                     }
                   }}
@@ -206,10 +265,9 @@ export default function Hero() {
                   {social.icon}
                 </a>
               )
-            ))}
+            )}
             <span className="w-px h-12 bg-gray-500/40"></span>
           </div>
-
         </div>
       </div>
     </section>

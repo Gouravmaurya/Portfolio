@@ -64,7 +64,7 @@ export default function About() {
     >
       {/* Big faded background text - static now */}
       <h1
-        className="absolute inset-0 font-mono flex items-start top-16 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+        className="absolute inset-0 font-mono flex items-start top-16 sm:top-4 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
                    bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
                    bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
         style={{
