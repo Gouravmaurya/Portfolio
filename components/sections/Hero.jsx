@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { TextPlugin } from "gsap/dist/TextPlugin";
-import { FiGithub, FiLinkedin, FiMail, FiDownload, FiCheck, FiCopy } from "react-icons/fi";
+import {
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiDownload,
+  FiCheck,
+  FiCopy,
+} from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
@@ -40,7 +47,9 @@ export default function Hero() {
     const name = nameRef.current;
     const letters = name.textContent.split("");
     name.innerHTML = letters
-      .map((l) => `<span class="inline-block opacity-0 translate-y-6">${l}</span>`)
+      .map(
+        (l) => `<span class="inline-block opacity-0 translate-y-6">${l}</span>`
+      )
       .join("");
 
     gsap.to(name.querySelectorAll("span"), {
@@ -52,7 +61,11 @@ export default function Hero() {
     });
 
     // Roles cycle with smoother vanish effect
-    const roles = ["Full-Stack Developer", "MERN Stack Developer", "Web Developer"];
+    const roles = [
+      "Full-Stack Developer",
+      "MERN Stack Developer",
+      "Web Developer",
+    ];
     let roleIndex = 0;
 
     const changeRole = () => {
@@ -158,13 +171,22 @@ export default function Hero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
           {/* Availability Badge */}
+          {/* Availability Badge */}
           <div className="flex justify-center mb-6">
             <span className="inline-flex items-center gap-3 text-white/90">
               <span className="relative flex h-3 w-3">
-                <span className="absolute inset-0 rounded-full bg-emerald-400/60 blur-[3px] animate-pulse"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 ring-2 ring-emerald-400/40"></span>
+                {/* Outer glowing pulse */}
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping"></span>
+
+                {/* Stronger blurred glow */}
+                <span className="absolute inset-0 rounded-full bg-emerald-400 blur-md opacity-80"></span>
+
+                {/* Solid center dot */}
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 ring-2 ring-emerald-500 shadow-[0_0_10px_3px_rgba(16,185,129,0.8)]"></span>
               </span>
-              <span className="tracking-wide font-semibold">Available For Work</span>
+              <span className="tracking-wide font-semibold">
+                Available For Work
+              </span>
             </span>
           </div>
 
@@ -174,7 +196,10 @@ export default function Hero() {
             className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
           >
             Hi, I’m{" "}
-            <span ref={nameRef} className="inline-block text-white font-bold tracking-wide">
+            <span
+              ref={nameRef}
+              className="inline-block text-white font-bold tracking-wide"
+            >
               Gourav Maurya
             </span>
             <br />
@@ -185,11 +210,15 @@ export default function Hero() {
 
           {/* Tagline */}
           <p className="tagline text-lg sm:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            I build fast, clean, and scalable web applications that put user experience first.
+            I build fast, clean, and scalable web applications that put user
+            experience first.
           </p>
 
           {/* CTA Buttons */}
-          <div ref={ctaRef} className="flex flex-wrap justify-center gap-6 mb-16">
+          <div
+            ref={ctaRef}
+            className="flex flex-wrap justify-center gap-6 mb-16"
+          >
             <a
               href="/Gourav_Maurya WebDeveloper_Resume.pdf"
               download
@@ -251,7 +280,11 @@ export default function Hero() {
                   className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
                   aria-label="Copy email to clipboard"
                 >
-                  {copied ? <FiCheck className="w-6 h-6 text-green-400" /> : social.icon}
+                  {copied ? (
+                    <FiCheck className="w-6 h-6 text-green-400" />
+                  ) : (
+                    social.icon
+                  )}
                 </button>
               ) : (
                 <a

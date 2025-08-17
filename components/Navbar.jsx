@@ -54,14 +54,22 @@ export default function FloatingDock({ isScrolled }) {
       {/* Mobile top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 md:hidden">
         <div className="flex items-center justify-between h-12 px-4 bg-black backdrop-blur">
-          <span className="text-white tracking-[0.25em] font-semibold text-sm">{brand}</span>
+          <span className="text-white tracking-[0.25em] font-semibold text-sm">
+            {brand}
+          </span>
           <button
             aria-label="Open navigation"
             onClick={() => setMenuOpen((v) => !v)}
             className="p-2 rounded-md hover:bg-white/10 text-white"
           >
             {/* 2x2 grid icon */}
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
               <rect x="3" y="3" width="7" height="7" rx="1" />
               <rect x="14" y="3" width="7" height="7" rx="1" />
               <rect x="3" y="14" width="7" height="7" rx="1" />
@@ -121,9 +129,15 @@ export default function FloatingDock({ isScrolled }) {
           }}
         >
           {navLinks.map((link) => (
-            <Link
+            <button
               key={link.name}
-              href={link.href}
+              onClick={() => {
+                const el = document.getElementById(link.href.substring(1));
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+                setMenuOpen(false); // close mobile menu
+              }}
               className={`relative text-sm font-medium px-2 py-1 transition-all duration-200 ${
                 activeSection === link.href.substring(1)
                   ? "text-white"
@@ -138,11 +152,10 @@ export default function FloatingDock({ isScrolled }) {
                 />
               )}
               {link.name}
-            </Link>
+            </button>
           ))}
         </div>
       </motion.nav>
     </>
   );
 }
-
