@@ -54,7 +54,7 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
+    <div className="min-h-screen flex flex-col bg-[rgb(var(--bg))] text-[rgb(var(--fg))]">
       <Head>
         <title>Gourav Maurya | Full-Stack Developer</title>
         <meta name="description" content="Full-Stack Developer specializing in building modern web applications with React, Next.js, and Node.js" />
@@ -62,7 +62,7 @@ export default function Layout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Navbar isScrolled={isScrolled} />
-      <main className="flex-grow bg-black text-white">{children}</main>
+      <main className="flex-grow bg-[rgb(var(--bg))] text-[rgb(var(--fg))]">{children}</main>
       <Footer />
     </div>
   );

@@ -75,16 +75,16 @@ export default function Education() {
     <section
       id="education"
       ref={sectionRef}
-      className="relative bg-black text-white py-20 md:py-28 overflow-hidden"
+      className="relative bg-[rgb(var(--bg))] text-[rgb(var(--fg))] py-20 md:py-28 overflow-hidden"
     >
       {/* Big faded text background */}
       <h1
         className="absolute inset-0 font-mono flex items-start top-12 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
-        bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+        bg-gradient-to-r from-[rgb(var(--fg))]/60 via-[rgb(var(--fg))]/35 to-[rgb(var(--fg))]/80 
         bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
         style={{
-          opacity: 0.12,
-          WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+          opacity: 0.18,
+          WebkitTextStroke: "1px rgba(var(--fg),0.45)",
           WebkitMaskImage:
             "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           maskImage:
@@ -100,7 +100,7 @@ export default function Education() {
           <h2 className="text-[3rem] sm:text-5xl md:text-[6rem] font-bold">
             Education
           </h2>
-          <p className="text-xs tracking-widest text-gray-400 mt-2">
+          <p className="text-xs tracking-widest text-[rgb(var(--fg))]/60 mt-2">
             ACADEMIC MILESTONES
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function Education() {
         {/* Timeline */}
         <div className="relative">
           {/* Center line */}
-          <div className="absolute left-1/2 top-0 w-px h-full bg-gray-700 -translate-x-1/2"></div>
+          <div className="absolute left-1/2 top-0 w-px h-full bg-[rgb(var(--fg))]/30 -translate-x-1/2"></div>
 
           {educationData.map((edu, index) => (
             <div
@@ -117,26 +117,26 @@ export default function Education() {
               className="relative flex flex-col items-center text-center mb-16"
             >
               {/* Icon */}
-              <div className="bg-black z-10 p-3 rounded-full border border-gray-600">
-                <FaGraduationCap className="text-white text-2xl" />
+              <div className="bg-[rgb(var(--bg))] z-10 p-3 rounded-full border border-[rgb(var(--fg))]/30">
+                <FaGraduationCap className="text-[rgb(var(--fg))] text-2xl" />
               </div>
 
               {/* Text */}
-              <div className="bg-black px-4 mt-4">
+              <div className="bg-[rgb(var(--bg))] px-4 mt-4">
                 <h3 className="text-xl md:text-2xl font-semibold">
                   {edu.degree}
                 </h3>
-                <p className="text-sm md:text-lg text-gray-400">
+                <p className="text-sm md:text-lg text-[rgb(var(--fg))]/60">
                   {edu.duration}
                 </p>
-                <p className="text-sm md:text-lg text-gray-500 mt-1">
+                <p className="text-sm md:text-lg text-[rgb(var(--fg))]/50 mt-1">
                   {edu.institution}
                 </p>
               </div>
 
               {/* Connector line */}
               {index !== educationData.length - 1 && (
-                <div className="w-px h-14 bg-gray-700 mt-4"></div>
+                <div className="w-px h-14 bg-[rgb(var(--fg))]/30 mt-4"></div>
               )}
             </div>
           ))}

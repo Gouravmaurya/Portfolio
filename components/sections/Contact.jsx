@@ -56,16 +56,16 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative bg-black text-white py-20 md:py-28 overflow-hidden flex flex-col justify-between min-h-screen"
+      className="relative bg-[rgb(var(--bg))] text-[rgb(var(--fg))] py-20 md:py-28 overflow-hidden flex flex-col justify-between min-h-screen"
     >
       {/* Big faded background text */}
       <h1
-         className="absolute inset-0 font-mono flex items-start top-12 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
-         bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+        className="absolute inset-0 font-mono flex items-start top-12 sm:-top-2 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
+         bg-gradient-to-r from-[rgb(var(--fg))]/60 via-[rgb(var(--fg))]/35 to-[rgb(var(--fg))]/80 
          bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
-style={{
-opacity: 0.12,
-WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+        style={{
+          opacity: 0.18,
+          WebkitTextStroke: "1px rgba(var(--fg),0.45)",
           WebkitMaskImage:
             "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           maskImage:
@@ -85,14 +85,14 @@ WebkitTextStroke: "1px rgba(192,192,192,0.5)",
         </h2>
         <p
           ref={(el) => (elementsRef.current[1] = el)}
-          className="text-base tracking-widest text-gray-400 mb-14"
+          className="text-base tracking-widest text-[rgb(var(--fg))]/60 mb-14"
         >
           GET IN TOUCH
         </p>
 
         <div
           ref={(el) => (elementsRef.current[2] = el)}
-          className="text-gray-300 leading-relaxed space-y-2 text-lg px-8"
+          className="text-[rgb(var(--fg))]/70 leading-relaxed space-y-2 text-lg px-8"
         >
           <p>I'm Available For Full-time Roles & Freelance Projects.</p>
           <p>My Inbox Is Always Open,</p>
@@ -107,7 +107,7 @@ WebkitTextStroke: "1px rgba(192,192,192,0.5)",
             href="https://www.instagram.com/gourav_maurya1/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-gray-500 rounded-lg hover:bg-gray-800 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-[rgb(var(--fg))]/30 rounded-lg hover:bg-[rgb(var(--fg))]/10 transition-colors"
           >
             Let&apos;s Chat <FaInstagram className="text-pink-500" />
           </a>

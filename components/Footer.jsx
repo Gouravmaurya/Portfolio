@@ -23,7 +23,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative z-10 bg-black text-gray-400 py-8 border-t border-gray-800">
+    <footer className="relative z-10 bg-[rgb(var(--bg))] text-[rgb(var(--fg))]/60 py-8 border-t border-[rgb(var(--fg))]/20">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex gap-6 mb-4 md:mb-0">
@@ -33,7 +33,7 @@ export default function Footer() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
+                className="hover:text-[rgb(var(--fg))] transition-colors"
                 aria-label={link.name}
               >
                 {link.icon}
@@ -41,7 +41,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="text-xs">
-            © {currentYear} Gourav Maurya. All rights reserved.
+            {currentYear} Gourav Maurya. All rights reserved.
           </p>
         </div>
       </div>

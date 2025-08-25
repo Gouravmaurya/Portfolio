@@ -13,3 +13,73 @@ html, body {
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
+
+/* Theme color variables: only colors change between light and dark */
+:root {
+  /* Light theme defaults */
+  --bg: 255 255 255; /* white */
+  --fg: 0 0 0;       /* black */
+  --primary: 0 240 255;     /* matches tailwind primary.DEFAULT */
+  --secondary: 121 40 202;  /* matches tailwind secondary.DEFAULT */
+}
+
+/* Dark theme overrides */
+.dark {
+  --bg: 0 0 0;         /* black */
+  --fg: 255 255 255;   /* white */
+  --primary: 0 196 209;    /* matches tailwind primary.dark */
+  --secondary: 92 31 158;  /* matches tailwind secondary.dark */
+}
+
+/* Convenience CSS variables to produce rgba via rgb(var(--x)/<alpha>) */
+.theme-bg { background-color: rgb(var(--bg)); }
+.theme-fg { color: rgb(var(--fg)); }
+.theme-border { border-color: rgb(var(--fg) / 0.2); }
+.theme-muted { color: rgb(var(--fg) / 0.6); }
+.theme-primary { color: rgb(var(--primary)); }
+.theme-secondary { color: rgb(var(--secondary)); }
+
+/* Smooth theme transition helper: temporarily applied to <html> */
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property: color, background-color, border-color, fill, stroke, outline-color, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important;
+  }
+}
+
+/* Circular reveal overlay for theme toggle */
+.theme-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: rgb(var(--bg));
+  clip-path: circle(0px at var(--cx) var(--cy));
+  animation: theme-reveal 450ms ease-out forwards;
+}
+
+@keyframes theme-reveal {
+  to {
+    clip-path: circle(var(--r) at var(--cx) var(--cy));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-reveal {
+    animation: none;
+    opacity: 0;
+    transition: opacity 150ms linear;
+  }
+  .theme-reveal.show {
+    opacity: 1;
+  }
+}

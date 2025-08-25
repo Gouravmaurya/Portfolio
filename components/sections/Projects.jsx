@@ -52,25 +52,25 @@ const projectsData = [
     showLive: false,
     timeline: "MARCH 2025 – April 2025",
   },
-  {
-    id: 4,
-    title: "Portfolio Website (This Site)",
-    description:
-      "A modern, responsive portfolio website built with Next.js, Tailwind CSS, and GSAP for smooth animations and transitions.",
-    tags: [
-      "Next.js",
-      "Tailwind CSS",
-      "GSAP",
-      "Framer Motion",
-      "Responsive Design",
-    ],
-    image: "/portfolio1.png",
-    github: "https://github.com/Gouravmaurya/Portfolio",
-    live: "https://gouravmaurya.vercel.app",
-    showGithub: true,
-    showLive: true,
-    timeline: "Aug 2025 – Present",
-  },
+  // {
+  //   id: 4,
+  //   title: "Portfolio Website (This Site)",
+  //   description:
+  //     "A modern, responsive portfolio website built with Next.js, Tailwind CSS, and GSAP for smooth animations and transitions.",
+  //   tags: [
+  //     "Next.js",
+  //     "Tailwind CSS",
+  //     "GSAP",
+  //     "Framer Motion",
+  //     "Responsive Design",
+  //   ],
+  //   image: "/portfolio1.png",
+  //   github: "https://github.com/Gouravmaurya/Portfolio",
+  //   live: "https://gouravmaurya.vercel.app",
+  //   showGithub: true,
+  //   showLive: true,
+  //   timeline: "Aug 2025 – Present",
+  // },
 ];
 
 export default function Projects() {
@@ -102,16 +102,16 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="bg-black text-white py-20 relative">
+    <section id="projects" className="bg-[rgb(var(--bg))] text-[rgb(var(--fg))] py-20 relative">
       <div className="container mx-auto px-4">
         {/* Big faded background text */}
         <h1
           className="absolute inset-0 font-mono flex items-start top-10 sm:-top-8 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
-           bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+           bg-gradient-to-r from-[rgb(var(--fg))]/60 via-[rgb(var(--fg))]/35 to-[rgb(var(--fg))]/80 
            bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
           style={{
-            opacity: 0.12,
-            WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+            opacity: 0.18,
+            WebkitTextStroke: "1px rgba(var(--fg),0.45)",
             WebkitMaskImage:
               "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
             maskImage:
@@ -126,7 +126,7 @@ export default function Projects() {
           <h2 className="text-[2.7rem] sm:text-5xl md:text-[6rem] font-bold tracking-tight">
             Projects
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl">
+          <p className="text-[rgb(var(--fg))]/60 max-w-2xl mx-auto mt-6 text-base sm:text-lg md:text-xl">
             A selection of my recent work, showcasing problem-solving skills,
             creativity, and technical expertise.
           </p>
@@ -141,20 +141,20 @@ export default function Projects() {
               className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 px-6"
             >
               {/* Image */}
-              <div className="relative w-full lg:w-1/2 h-64 lg:h-80 rounded-xl overflow-hidden border border-gray-800 group shadow-lg">
+              <div className="relative w-full lg:w-1/2 h-64 lg:h-80 rounded-xl overflow-hidden border border-[rgb(var(--fg))]/20 group shadow-lg">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-4">
+                <div className="absolute inset-0 bg-[rgb(var(--bg))]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-4">
                   {project.showGithub && project.github && (
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition-all"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-[rgb(var(--fg))] text-[rgb(var(--bg))] hover:bg-[rgb(var(--fg))]/90 transition-all"
                     >
                       <FiGithub className="w-5 h-5" />
                     </a>
@@ -164,7 +164,7 @@ export default function Projects() {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition-all"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-[rgb(var(--fg))] text-[rgb(var(--bg))] hover:bg-[rgb(var(--fg))]/90 transition-all"
                     >
                       <FiExternalLink className="w-5 h-5" />
                     </a>
@@ -174,13 +174,13 @@ export default function Projects() {
 
               {/* Content */}
               <div className="w-full lg:w-1/2">
-                <p className="text-sm font-mono text-gray-400 mb-1">
+                <p className="text-sm font-mono text-[rgb(var(--fg))]/60 mb-1">
                   {project.timeline} {/* ✅ Timeline shown here */}
                 </p>
                 <h3 className="text-2xl md:text-3xl font-bold mb-4">
                   {project.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed mb-6">
+                <p className="text-[rgb(var(--fg))]/70 leading-relaxed mb-6">
                   {project.description}
                 </p>
 
@@ -189,7 +189,7 @@ export default function Projects() {
                   {project.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-gray-900 border border-gray-800 text-xs rounded font-mono text-gray-400"
+                      className="px-3 py-1 bg-[rgb(var(--fg))]/10 border border-[rgb(var(--fg))]/20 text-xs rounded font-mono text-[rgb(var(--fg))]/70"
                     >
                       {tag}
                     </span>
@@ -203,7 +203,7 @@ export default function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 hover:text-white transition-colors"
+                      className="flex items-center text-[rgb(var(--fg))]/70 hover:text-[rgb(var(--fg))] transition-colors"
                     >
                       <FiGithub className="mr-2" />
                       Code
@@ -214,7 +214,7 @@ export default function Projects() {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-gray-400 hover:text-white transition-colors"
+                      className="flex items-center text-[rgb(var(--fg))]/70 hover:text-[rgb(var(--fg))] transition-colors"
                     >
                       <FiExternalLink className="mr-2" />
                       Live Demo
@@ -228,14 +228,14 @@ export default function Projects() {
 
         {/* Footer */}
         <div className="mt-24 text-center px-6">
-          <p className="text-gray-400 mb-6">
+          <p className="text-[rgb(var(--fg))]/60 mb-6">
             Explore more projects and open-source contributions on my GitHub.
           </p>
           <a
             href="https://github.com/Gouravmaurya"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition-all"
+            className="inline-flex items-center px-6 py-3 bg-[rgb(var(--fg))] text-[rgb(var(--bg))] font-medium rounded-full hover:bg-[rgb(var(--fg))]/90 transition-all"
           >
             <FiGithub className="mr-2" />
             View All Projects

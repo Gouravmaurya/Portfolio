@@ -6,30 +6,22 @@ import * as TbIcons from "react-icons/tb";
 
 const skillsData = [
   { name: "JavaScript", icon: "SiJavascript", color: "#F7DF1E" },
-  { name: "Python", icon: "SiPython", color: "#3776AB" },
   { name: "React.js", icon: "SiReact", color: "#61DAFB" },
   { name: "Tailwind CSS", icon: "SiTailwindcss", color: "#06B6D4" },
-  { name: "Next.js", icon: "SiNextdotjs", color: "#ffffff" },
+  { name: "Next.js", icon: "SiNextdotjs", color: "#000000" },
   { name: "HTML", icon: "SiHtml5", color: "#E34F26" },
   { name: "CSS", icon: "SiCss3", color: "#1572B6" },
   { name: "Firebase", icon: "SiFirebase", color: "#FFCA28" },
   { name: "Node.js", icon: "SiNodedotjs", color: "#339933" },
-  { name: "REST APIs", icon: "TbApi", color: "#ffffff" },
-  { name: "Express.js", icon: "SiExpress", color: "#ffffff" },
+  { name: "REST APIs", icon: "TbApi", color: "#000000" },
+  { name: "Express.js", icon: "SiExpress", color: "#000000" },
   { name: "JWT", icon: "SiJsonwebtokens", color: "#000000" },
-  { name: "React-Bit", icon: "SiReact", color: "#61DAFB" },
-  { name: "Hero-UI", icon: "TbBrandReact", color: "#61DAFB" },
-  { name: "Shadcn-UI", icon: "TbBrandReact", color: "#61DAFB" },
-  { name: "Framer Motion", icon: "SiFramer", color: "#0055FF" },
-  { name: "Lenis", icon: "TbWaveSine", color: "#ffffff" },
-  { name: "GSAP", icon: "SiGreensock", color: "#88CE02" },
   { name: "MongoDB", icon: "SiMongodb", color: "#47A248" },
-  { name: "Git", icon: "SiGit", color: "#F05032" },
-  { name: "GitHub", icon: "SiGithub", color: "#ffffff" },
+  { name: "GitHub", icon: "SiGithub", color: "#000000" },
   { name: "Docker", icon: "SiDocker", color: "#2496ED" },
   { name: "Postman", icon: "SiPostman", color: "#FF6C37" },
-  { name: "VS Code", icon: "SiVisualstudiocode", color: "#007ACC" },
   { name: "Bootstrap", icon: "SiBootstrap", color: "#7952B3" },
+  // { name: "Django", icon: "SiDjango", color: "#092E20" },
 ];
 
 const Icon = ({ name, color, size }) => {
@@ -38,7 +30,14 @@ const Icon = ({ name, color, size }) => {
     console.warn(`Icon ${name} not found`);
     return <span className="w-5 h-5"></span>;
   }
-  return <IconComponent color={color} size={size} />;
+  // If provided color is strict black, let it inherit current text color.
+  // This makes it white in dark mode and black in light mode automatically.
+  const isPureBlack = typeof color === "string" && color.toLowerCase() === "#000000";
+  return isPureBlack ? (
+    <IconComponent size={size} />
+  ) : (
+    <IconComponent color={color} size={size} />
+  );
 };
 
 const container = {
@@ -62,16 +61,16 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-24 bg-black text-white relative overflow-hidden"
+      className="py-24 bg-[rgb(var(--bg))] text-[rgb(var(--fg))] relative overflow-hidden"
     >
       {/* Big faded text background */}
       <h1
         className="absolute inset-0 font-mono flex items-start top-16 sm:-top-8 justify-center text-[5rem] sm:text-[7rem] md:text-[12rem] font-bold 
-       bg-gradient-to-r from-gray-600/60 via-gray-200 to-white 
+       bg-gradient-to-r from-[rgb(var(--fg))]/60 via-[rgb(var(--fg))]/35 to-[rgb(var(--fg))]/80 
        bg-clip-text text-transparent tracking-tighter select-none pointer-events-none z-0"
         style={{
-          opacity: 0.12,
-          WebkitTextStroke: "1px rgba(192,192,192,0.5)",
+          opacity: 0.18,
+          WebkitTextStroke: "1px rgba(var(--fg),0.45)",
           WebkitMaskImage:
             "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           maskImage:
@@ -93,14 +92,14 @@ export default function Skills() {
           <h2 className="text-[3rem] sm:text-5xl md:text-[6rem] font-bold">
             Skills
           </h2>
-          <p className="text-gray-400 mt-4 tracking-widest">
+          <p className="text-[rgb(var(--fg))]/60 mt-4 tracking-widest">
             I CONSTANTLY TRY TO IMPROVE
           </p>
         </motion.div>
 
         {/* Skills Grid */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 px-4"
+          className="flex flex-wrap  justify-center gap-3 px-4 py-14"
           variants={container}
           initial="hidden"
           whileInView="visible"
@@ -110,7 +109,7 @@ export default function Skills() {
             <motion.div
               key={index}
               variants={item}
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-900 rounded-lg border border-neutral-800 hover:border-neutral-600 transition-all duration-300 cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 bg-[rgb(var(--fg))]/10 rounded-lg border border-[rgb(var(--fg))]/20 hover:border-[rgb(var(--fg))]/40 transition-all duration-300 cursor-pointer"
               whileHover={{ y: -3, scale: 1.05 }}
             >
               <Icon name={icon} color={color} size={20} />
