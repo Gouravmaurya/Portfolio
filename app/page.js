@@ -17,6 +17,10 @@ const Skills = dynamic(() => import('@/components/sections/Skills'), {
   suspense: true,
 });
 
+const Experience = dynamic(() => import('@/components/sections/Experience'), {
+  suspense: true,
+});
+
 const Projects = dynamic(() => import('@/components/sections/Projects'), {
   suspense: true,
 });
@@ -42,6 +46,7 @@ export default function Home() {
         <Hero />
         <About />
         <Skills />
+        <Experience />
         <Projects />
         <Education />
         <Contact />

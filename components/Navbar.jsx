@@ -16,7 +16,9 @@ const navLinks = [
 export default function FloatingDock({ isScrolled }) {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const brand = "GM"; // change as needed
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const brand = "GM";
   const [theme, setTheme] = useState("dark");
 
   // Initialize theme from localStorage; default to dark
@@ -86,6 +88,20 @@ export default function FloatingDock({ isScrolled }) {
       }, 300);
     }, durationMs); // slightly longer than CSS animation (450ms)
   };
+  // Scroll-aware visibility
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 80) {
+        setIsVisible(false);
+        setMenuOpen(false);
+      } else {
+        setIsVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", controlNavbar);
+    return () => window.removeEventListener("scroll", controlNavbar);
+  }, [lastScrollY]);
 
   // Active section detection
   useEffect(() => {
@@ -167,26 +183,32 @@ export default function FloatingDock({ isScrolled }) {
           {menuOpen && (
             <motion.div
               key="mobile-menu"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18 }}
-              className="absolute top-12 left-0 right-0 bg-[rgb(var(--bg))/0.95] backdrop-blur px-2 py-2"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute top-12 left-0 right-0 bg-[rgb(var(--bg))]/80 backdrop-blur-2xl border-b border-[rgb(var(--fg))]/10 overflow-hidden"
             >
-              <nav className="flex flex-col">
-                {navLinks.map((link) => (
-                  <Link
+              <nav className="flex flex-col p-6 gap-4">
+                {navLinks.map((link, i) => (
+                  <motion.div
                     key={link.name}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`px-3 py-2 rounded-md text-sm transition-colors ${
-                      activeSection === link.href.substring(1)
-                        ? "text-[rgb(var(--fg))] bg-[rgb(var(--fg))]/10"
-                        : "text-[rgb(var(--fg))]/70 hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg))]/5"
-                    }`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
                   >
-                    {link.name}
-                  </Link>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`text-2xl font-bold transition-colors ${
+                        activeSection === link.href.substring(1)
+                          ? "text-primary"
+                          : "text-[rgb(var(--fg))]/50"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
                 ))}
               </nav>
             </motion.div>
@@ -197,21 +219,22 @@ export default function FloatingDock({ isScrolled }) {
       {/* Desktop floating dock (md and up) */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="hidden md:block fixed top-4 left-1/2 -translate-x-1/2 z-40"
+        animate={{ 
+          y: isVisible ? 0 : -100, 
+          opacity: isVisible ? 1 : 0 
+        }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-40"
       >
         <div
-          className="flex items-center gap-6 px-6 py-3 
+          className="flex items-center gap-2 p-1.5
             rounded-full 
-            border border-[rgb(var(--fg))]/20
-            bg-[rgb(var(--fg))]/10 backdrop-blur-2xl 
-            shadow-lg shadow-[rgb(var(--bg))]/20 
-            transition-all duration-300"
+            border border-[rgb(var(--fg))]/10
+            bg-[rgb(var(--bg))]/40 backdrop-blur-xl
+            shadow-[0_8px_32px_rgba(0,0,0,0.12)]
+            transition-all duration-500"
           style={{
-            WebkitBackdropFilter: "blur(20px) saturate(180%)",
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
           }}
         >
           {navLinks.map((link) => (
@@ -222,22 +245,22 @@ export default function FloatingDock({ isScrolled }) {
                 if (el) {
                   el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
-                setMenuOpen(false); // close mobile menu
+                setMenuOpen(false);
               }}
-              className={`relative text-sm font-medium px-2 py-1 transition-all duration-200 ${
+              className={`relative text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
                 activeSection === link.href.substring(1)
                   ? "text-[rgb(var(--fg))]"
-                  : "text-[rgb(var(--fg))]/60 hover:text-[rgb(var(--fg))]"
+                  : "text-[rgb(var(--fg))]/50 hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg))]/5"
               }`}
             >
               {activeSection === link.href.substring(1) && (
                 <motion.span
                   layoutId="active-pill"
-                  className="absolute inset-0 rounded-full bg-[rgb(var(--fg))]/20 -z-10"
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="absolute inset-0 rounded-full bg-[rgb(var(--fg))]/10 -z-10 shadow-[inset_0_0_12px_rgba(0,0,0,0.05)]"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              {link.name}
+              <span className="relative z-10">{link.name}</span>
             </button>
           ))}
           <button
