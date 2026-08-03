@@ -7,24 +7,24 @@ import { SiteChrome } from "@/components/site-chrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gouravmaurya.vercel.app"),
-  title: { default: "Gourav Maurya — Signal Observatory", template: "%s — Gourav Maurya" },
-  description: "Full-stack AI engineer and creative developer turning scattered ideas into clear, intelligent product systems.",
+  title: { default: "Gourav Maurya — Full-Stack AI Engineer", template: "%s — Gourav Maurya" },
+  description: "Full-stack AI engineer and creative developer building intelligent products from interface to infrastructure.",
   keywords: ["Gourav Maurya", "Full-Stack AI Engineer", "Creative Developer", "Next.js", "AI products"],
   openGraph: {
-    title: "Gourav Maurya — Signal Observatory",
-    description: "AI products engineered from interface to infrastructure.",
+    title: "Gourav Maurya — Full-Stack AI Engineer",
+    description: "Intelligent products built from interface to infrastructure.",
     type: "website",
     images: [{ url: "/og.png", width: 1728, height: 909, alt: "Gourav Maurya — Full-Stack AI Engineer" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gourav Maurya — Signal Observatory",
-    description: "AI products engineered from interface to infrastructure.",
+    title: "Gourav Maurya — Full-Stack AI Engineer",
+    description: "Intelligent products built from interface to infrastructure.",
     images: ["/og.png"],
   },
 };
 
-export const viewport: Viewport = { themeColor: "#080b0d", colorScheme: "dark", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#f1ede3", colorScheme: "light", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const structuredData = {
