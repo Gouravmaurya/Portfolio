@@ -2,18 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useExperience } from "./experience-provider";
 
 export function SiteChrome() {
   const pathname = usePathname();
   const home = pathname === "/";
-  return <header className="editorial-header">
-    <Link href="/" className="wordmark" aria-label="Gourav Maurya home">GM<span>®</span></Link>
-    <p className="header-location">INDIA<br />26.8467° N</p>
+  const { soundEnabled, toggleSound } = useExperience();
+  const anchor = (hash: string) => home ? hash : `/${hash}`;
+
+  return <header className="atlas-header" data-page-shell>
+    <Link href="/" className="atlas-wordmark" aria-label="Gourav Maurya home">
+      GM <span>28.61° N / 77.20° E</span>
+    </Link>
     <nav aria-label="Primary navigation">
-      <Link href={home ? "#work" : "/#work"}>WORK</Link>
-      <Link href={home ? "#about" : "/#about"}>ABOUT</Link>
-      <Link href={home ? "#contact" : "/#contact"}>CONTACT</Link>
+      <a href={anchor("#territory")}>Work</a>
+      <a href={anchor("#instruments")}>Practice</a>
+      <a href={anchor("#field-notes")}>About</a>
+      <a href={anchor("#open-route")}>Contact</a>
     </nav>
-    <a className="header-email" href="mailto:gouravmaurya351@gmail.com"><i /> AVAILABLE<br />FOR SELECTED WORK</a>
+    <button className="sound-toggle" type="button" onClick={toggleSound} aria-pressed={soundEnabled} aria-label={`${soundEnabled ? "Disable" : "Enable"} ambient sound`}>
+      <span aria-hidden="true">{soundEnabled ? "Sound on" : "Sound off"}</span><i aria-hidden="true" />
+    </button>
   </header>;
 }

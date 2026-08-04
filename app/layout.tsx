@@ -1,30 +1,37 @@
 import type { Metadata, Viewport } from "next";
+import { Newsreader, Manrope, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ExperienceProvider } from "@/components/experience-provider";
 import { SiteChrome } from "@/components/site-chrome";
 
+const newsreader = Newsreader({ subsets: ["latin"], variable: "--font-editorial", display: "swap" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://gouravmaurya.vercel.app"),
-  title: { default: "Gourav Maurya — Full-Stack AI Engineer", template: "%s — Gourav Maurya" },
-  description: "Full-stack AI engineer and creative developer building intelligent products from interface to infrastructure.",
-  keywords: ["Gourav Maurya", "Full-Stack AI Engineer", "Creative Developer", "Next.js", "AI products"],
+  title: { default: "Gourav Maurya — The Atlas of Useful Intelligence", template: "%s — Gourav Maurya" },
+  description: "A cinematic one-page portfolio by Gourav Maurya, a full-stack AI engineer mapping complex ideas into useful intelligent products.",
+  keywords: ["Gourav Maurya", "Full-Stack AI Engineer", "Creative Developer", "Next.js", "AI products", "Portfolio"],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Gourav Maurya — Full-Stack AI Engineer",
-    description: "Intelligent products built from interface to infrastructure.",
+    title: "Gourav Maurya — The Atlas of Useful Intelligence",
+    description: "Full-stack AI engineer and creative developer mapping complex ideas into useful intelligent products.",
     type: "website",
-    images: [{ url: "/og.png", width: 1728, height: 909, alt: "Gourav Maurya — Full-Stack AI Engineer" }],
+    url: "/",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Gourav Maurya — The Atlas of Useful Intelligence" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gourav Maurya — Full-Stack AI Engineer",
-    description: "Intelligent products built from interface to infrastructure.",
+    title: "Gourav Maurya — The Atlas of Useful Intelligence",
+    description: "Full-stack AI engineer and creative developer mapping complex ideas into useful intelligent products.",
     images: ["/og.png"],
   },
 };
 
-export const viewport: Viewport = { themeColor: "#f1ede3", colorScheme: "light", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#f2eee4", colorScheme: "light", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const structuredData = {
@@ -33,15 +40,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: "Gourav Maurya",
     jobTitle: "Full-Stack AI Engineer and Creative Developer",
     url: "https://gouravmaurya.vercel.app",
+    sameAs: ["https://github.com/Gouravmaurya", "https://www.linkedin.com/in/gourav-maurya-a39969226/"],
   };
-  return (
-    <html lang="en">
-      <body>
-        <a className="skip-link" href="#main">Skip to content</a>
-        <ExperienceProvider><SiteChrome />{children}</ExperienceProvider>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <Analytics /><SpeedInsights />
-      </body>
-    </html>
-  );
+  return <html lang="en">
+    <body className={`${newsreader.variable} ${manrope.variable} ${plexMono.variable}`}>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <ExperienceProvider><SiteChrome />{children}</ExperienceProvider>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <Analytics /><SpeedInsights />
+    </body>
+  </html>;
 }
