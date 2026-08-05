@@ -35,13 +35,13 @@ export const metadata: Metadata = {
     description: "Full-stack AI engineer and creative developer mapping complex ideas into useful intelligent products.",
     type: "website",
     url: "/",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Gourav Maurya — The Atlas of Useful Intelligence" }],
+    images: [{ url: "/og-v2.png", width: 1680, height: 945, alt: "Gourav Maurya — The Atlas of Useful Intelligence" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Gourav Maurya — The Atlas of Useful Intelligence",
     description: "Full-stack AI engineer and creative developer mapping complex ideas into useful intelligent products.",
-    images: ["/og.png"],
+    images: ["/og-v2.png"],
   },
 };
 
