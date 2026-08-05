@@ -56,8 +56,33 @@ export function HomeExperience() {
       gsap.registerPlugin(ScrollTrigger);
       const context = gsap.context(() => {
         gsap.from(".atlas-hero-line > span", { yPercent: 112, rotate: 1.5, duration: 1.15, stagger: 0.09, ease: "power4.out" });
-        gsap.from(".hero-cartographer", { opacity: 0, scale: 1.05, y: 45, duration: 1.4, ease: "power3.out", delay: 0.18 });
+        gsap.from(".prologue-base", { opacity: 0, scale: 1.04, y: 32, duration: 1.4, ease: "power3.out", delay: 0.18 });
         gsap.from(".hero-coordinate, .hero-foot", { opacity: 0, y: 16, duration: 0.75, stagger: 0.12, delay: 0.65 });
+
+        const beats = gsap.utils.toArray<HTMLElement>(".prologue-beat");
+        if (beats.length === 4) {
+          gsap.set(beats, { autoAlpha: 0, y: 30 });
+          const prologue = gsap.timeline({ scrollTrigger: { trigger: ".scroll-prologue", start: "top top", end: "bottom bottom", scrub: motion === "reduced" ? 0.2 : 0.85 } });
+          prologue
+            .to(".hero-title", { yPercent: -42, autoAlpha: 0, duration: 0.18, ease: "power2.in" }, 0)
+            .to(".prologue-base", { scale: 1.12, autoAlpha: 0.12, filter: "blur(2px)", duration: 0.9, ease: "none" }, 0)
+            .fromTo(".layer-table", { autoAlpha: 0, xPercent: -28, yPercent: 42, rotate: -8, scale: 0.74 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.08)
+            .to(beats[0], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.12)
+            .to(beats[0], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.23)
+            .to(beats[1], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.27)
+            .fromTo(".layer-cartographer", { autoAlpha: 0, xPercent: 36, yPercent: 16, rotate: 4, scale: 0.86 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.29)
+            .to(".layer-table", { xPercent: -18, yPercent: 8, rotate: -2, scale: 0.94, duration: 0.18 }, 0.36)
+            .to(beats[1], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.42)
+            .to(beats[2], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.46)
+            .fromTo(".layer-instruments", { autoAlpha: 0, xPercent: -42, yPercent: -18, rotate: -18, scale: 0.72 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.5)
+            .to(".layer-cartographer", { xPercent: 12, yPercent: 3, rotate: 1.5, duration: 0.18 }, 0.56)
+            .to(beats[2], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.63)
+            .to(beats[3], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.68)
+            .to(".layer-table", { xPercent: -6, yPercent: 0, rotate: 0, scale: 1, duration: 0.24 }, 0.72)
+            .to(".layer-cartographer", { xPercent: 0, yPercent: 0, rotate: 0, duration: 0.24 }, 0.72)
+            .to(".layer-instruments", { xPercent: 8, yPercent: 8, rotate: 8, scale: 0.88, duration: 0.24 }, 0.72)
+            .to(".prologue-meter span", { scaleY: 1, duration: 1, ease: "none" }, 0);
+        }
 
         gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
           gsap.from(element, { y: motion === "reduced" ? 22 : 55, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 88%", once: true } });
@@ -85,17 +110,29 @@ export function HomeExperience() {
     <main id="main" ref={root} className="atlas-main" data-page-shell>
       <RouteCanvas />
 
-      <section className="atlas-hero" id="top" aria-labelledby="atlas-title">
-        <img className="hero-cartographer" src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
-        <div className="paper-fade" aria-hidden="true" />
-        <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
-        <div className="hero-title" id="atlas-title">
-          <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
-          <h1><span className="atlas-hero-line"><span>The atlas of</span></span><span className="atlas-hero-line italic"><span>useful</span></span><span className="atlas-hero-line"><span>intelligence</span></span></h1>
-        </div>
-        <div className="hero-foot">
-          <p>Full-stack AI engineer<br />Creative developer</p>
-          <a href="#coordinates">Begin the route <span aria-hidden="true">↓</span></a>
+      <section className="scroll-prologue" id="top" aria-labelledby="atlas-title" data-scroll-story>
+        <div className="prologue-sticky atlas-grid">
+          <img className="prologue-base" src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
+          <div className="prologue-wash" aria-hidden="true" />
+          <img className="prologue-cutout layer-table" src="/atlas/layers/drafting-table-cutout.webp" alt="" aria-hidden="true" />
+          <img className="prologue-cutout layer-cartographer" src="/atlas/layers/cartographer-cutout.webp" alt="" aria-hidden="true" />
+          <img className="prologue-cutout layer-instruments" src="/atlas/layers/instruments-cutout.webp" alt="" aria-hidden="true" />
+          <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
+          <div className="hero-title" id="atlas-title">
+            <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
+            <h1><span className="atlas-hero-line"><span>The atlas of</span></span><span className="atlas-hero-line italic"><span>useful</span></span><span className="atlas-hero-line"><span>intelligence</span></span></h1>
+          </div>
+          <div className="prologue-story" aria-label="How I build products">
+            <article className="prologue-beat"><span>00 / Uncharted</span><h2>Every useful system begins as uncertain territory.</h2><p>Scroll to separate the map into the disciplines behind my work.</p></article>
+            <article className="prologue-beat"><span>01 / Interface</span><h2>I make complex inputs feel immediate.</h2><p>Clear product surfaces, purposeful interaction and frontend engineering reveal the next decision.</p></article>
+            <article className="prologue-beat"><span>02 / Systems</span><h2>I connect every visible choice to a dependable system.</h2><p>Application logic, APIs and data move together as one maintainable product route.</p></article>
+            <article className="prologue-beat"><span>03 / Intelligence</span><h2>I shape AI around human judgement.</h2><p>Visible state, structured workflows and useful control turn model capability into a product people can trust.</p></article>
+          </div>
+          <div className="prologue-meter" aria-hidden="true"><span /></div>
+          <div className="hero-foot">
+            <p>Full-stack AI engineer<br />Creative developer</p>
+            <a href="#coordinates">Enter the atlas <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
       </section>
 
