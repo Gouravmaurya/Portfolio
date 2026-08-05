@@ -5,9 +5,7 @@ import type { MotionProfile } from "@/types/content";
 
 type ExperienceContextValue = {
   motion: MotionProfile;
-  depthEnabled: boolean;
   soundEnabled: boolean;
-  toggleDepth: () => void;
   toggleSound: () => void;
 };
 
@@ -15,7 +13,6 @@ const ExperienceContext = createContext<ExperienceContextValue | null>(null);
 
 export function ExperienceProvider({ children }: { children: React.ReactNode }) {
   const [motion, setMotion] = useState<MotionProfile>("static");
-  const [depthEnabled, setDepthEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const audioRef = useRef<{ context: AudioContext; gain: GainNode; source: AudioBufferSourceNode; tick: number } | null>(null);
 
@@ -23,29 +20,7 @@ export function ExperienceProvider({ children }: { children: React.ReactNode }) 
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarse = matchMedia("(pointer: coarse)").matches;
     setMotion(reduced ? "static" : coarse ? "reduced" : "full");
-    setDepthEnabled(localStorage.getItem("atlas-depth") !== "off");
   }, []);
-
-  useEffect(() => {
-    if (!depthEnabled || motion !== "full") return;
-    let raf = 0;
-    const onPointerMove = (event: PointerEvent) => {
-      const x = (event.clientX / window.innerWidth - 0.5) * 2;
-      const y = (event.clientY / window.innerHeight - 0.5) * 2;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        document.documentElement.style.setProperty("--depth-x", x.toFixed(3));
-        document.documentElement.style.setProperty("--depth-y", y.toFixed(3));
-      });
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onPointerMove);
-      document.documentElement.style.setProperty("--depth-x", "0");
-      document.documentElement.style.setProperty("--depth-y", "0");
-    };
-  }, [depthEnabled, motion]);
 
   useEffect(() => {
     if (motion !== "full") return;
@@ -124,14 +99,9 @@ export function ExperienceProvider({ children }: { children: React.ReactNode }) 
   }, [soundEnabled]);
 
   const toggleSound = useCallback(() => setSoundEnabled((enabled) => !enabled), []);
-  const toggleDepth = useCallback(() => setDepthEnabled((enabled) => {
-    const next = !enabled;
-    localStorage.setItem("atlas-depth", next ? "on" : "off");
-    return next;
-  }), []);
-  const value = useMemo(() => ({ motion, depthEnabled, soundEnabled, toggleDepth, toggleSound }), [motion, depthEnabled, soundEnabled, toggleDepth, toggleSound]);
+  const value = useMemo(() => ({ motion, soundEnabled, toggleSound }), [motion, soundEnabled, toggleSound]);
 
-  return <ExperienceContext.Provider value={value}><div data-motion={motion} data-depth={depthEnabled ? "on" : "off"}>{children}</div></ExperienceContext.Provider>;
+  return <ExperienceContext.Provider value={value}><div data-motion={motion}>{children}</div></ExperienceContext.Provider>;
 }
 
 export function useExperience() {

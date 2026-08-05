@@ -18,7 +18,7 @@ function readCase(): OverlayKey | null {
 export function HomeExperience() {
   const root = useRef<HTMLElement>(null);
   const [activeCase, setActiveCase] = useState<OverlayKey | null>(null);
-  const { motion, depthEnabled } = useExperience();
+  const { motion } = useExperience();
 
   useEffect(() => {
     setActiveCase(readCase());
@@ -66,19 +66,17 @@ export function HomeExperience() {
         gsap.utils.toArray<HTMLElement>("[data-atlas-scene]").forEach((scene) => {
           const plate = scene.querySelector<HTMLElement>(".chapter-plate");
           const caption = scene.querySelector<HTMLElement>(".chapter-caption");
-          const travel = depthEnabled ? 6 : 3;
-          if (plate) gsap.fromTo(plate, { yPercent: motion === "reduced" ? 0 : -travel, scale: depthEnabled ? 1.09 : 1.055 }, { yPercent: motion === "reduced" ? 0 : travel, scale: 1, ease: "none", scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: motion === "reduced" ? false : 0.8 } });
+          if (plate) gsap.fromTo(plate, { yPercent: motion === "reduced" ? 0 : -3, scale: 1.055 }, { yPercent: motion === "reduced" ? 0 : 3, scale: 1, ease: "none", scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: motion === "reduced" ? false : 0.8 } });
           if (caption) gsap.from(caption, { clipPath: "inset(0 100% 0 0)", scrollTrigger: { trigger: scene, start: "top 62%", end: "top 34%", scrub: motion === "reduced" ? false : 0.55 } });
         });
 
         gsap.to(".coordinate-compass", { rotate: 110, ease: "none", scrollTrigger: { trigger: "#coordinates", start: "top bottom", end: "bottom top", scrub: 1 } });
-        if (depthEnabled) gsap.to(".depth-orbit", { rotate: 38, yPercent: -12, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom bottom", scrub: 1.2 } });
         gsap.to(".field-line", { scaleX: 1, transformOrigin: "left", ease: "none", scrollTrigger: { trigger: "#field-notes", start: "top 75%", end: "bottom 75%", scrub: 0.7 } });
       }, root);
       dispose = () => context.revert();
     });
     return () => { cancelled = true; dispose(); };
-  }, [motion, depthEnabled]);
+  }, [motion]);
 
   const haven = scenes.find((scene) => scene.id === "haven")!;
   const safar = scenes.find((scene) => scene.id === "safar")!;
@@ -86,12 +84,10 @@ export function HomeExperience() {
   return <>
     <main id="main" ref={root} className="atlas-main" data-page-shell>
       <RouteCanvas />
-      <DepthField />
 
       <section className="atlas-hero" id="top" aria-labelledby="atlas-title">
         <img className="hero-cartographer" src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
         <div className="paper-fade" aria-hidden="true" />
-        <div className="hero-depth-planes" aria-hidden="true"><i /><i /><span /></div>
         <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
         <div className="hero-title" id="atlas-title">
           <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
@@ -167,15 +163,6 @@ export function HomeExperience() {
     </main>
     <CaseOverlay active={activeCase} onClose={closeCase} />
   </>;
-}
-
-function DepthField() {
-  return <div className="depth-field" aria-hidden="true">
-    <i className="depth-haze" />
-    <i className="depth-orbit depth-orbit-a" />
-    <i className="depth-orbit depth-orbit-b" />
-    <span className="depth-reticle"><b /><b /></span>
-  </div>;
 }
 
 function ProjectChapter({ scene, onOpen, meta, reverse = false }: { scene: (typeof scenes)[number]; onOpen: () => void; meta: string; reverse?: boolean }) {
