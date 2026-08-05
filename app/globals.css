@@ -66,6 +66,22 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-foot a { display: flex; gap: 44px; align-items: center; font: 500 9px var(--mono); text-transform: uppercase; }
 .hero-foot a span { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; color: var(--indigo); }
 
+/* 12-frame scroll prototype */
+.hero-sequence { height: 240svh; min-height: 1700px; background: var(--paper); }
+.hero-sequence.is-static { height: 100svh; min-height: 760px; }
+.hero-sequence-sticky { position: sticky; top: 0; height: 100svh; min-height: 680px; overflow: hidden; }
+.hero-sequence-fallback, .hero-sequence-canvas { position: absolute; z-index: 0; inset: 72px 0 0; width: 100%; height: calc(100% - 72px); }
+.hero-sequence-fallback { object-fit: cover; object-position: center; }
+.hero-sequence-canvas { opacity: 0; transition: opacity .35s ease; }
+.hero-sequence-canvas.is-ready { opacity: 1; }
+.hero-sequence .hero-coordinate { position: absolute; z-index: 3; top: 106px; right: clamp(24px,4vw,64px); padding: 0; }
+.hero-sequence .hero-title { position: absolute; z-index: 3; top: 22%; left: clamp(24px,4vw,64px); width: min(66vw,980px); padding: 0; }
+.hero-sequence-copy { width: min(390px,70%); margin: 32px 0 0 17%; color: var(--muted); font-size: 14px; line-height: 1.55; text-transform: none; }
+.hero-sequence .hero-foot { position: absolute; z-index: 3; right: clamp(24px,4vw,64px); bottom: 32px; left: clamp(24px,4vw,64px); }
+.hero-frame-rail { position: absolute; z-index: 3; right: clamp(24px,4vw,64px); bottom: 92px; left: clamp(24px,4vw,64px); height: 1px; background: rgba(41,59,120,.18); }
+.hero-frame-rail span { display: block; width: 100%; height: 1px; background: var(--indigo); transform-origin: left; transition: transform .12s linear; }
+.hero-sequence::after { content: "SCROLL / FRAME BY FRAME"; position: absolute; z-index: 3; top: 50svh; right: 14px; color: var(--muted); font: 7px var(--mono); letter-spacing: .08em; writing-mode: vertical-rl; transform: translateY(-50%); }
+
 /* Coordinates */
 .coordinates-section { min-height: 120svh; padding-top: 17vh; padding-bottom: 14vh; display: grid; grid-template-columns: repeat(12, 1fr); align-content: start; }
 .coordinate-index { grid-column: 1 / 4; display: flex; gap: 28px; color: var(--muted); font: 9px/1.5 var(--mono); text-transform: uppercase; }
@@ -178,6 +194,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .atlas-grid { padding-inline: 20px; background-size: calc(100% - 40px) 100%; background-position: 20px 0; }
   .atlas-header { height: 64px; padding-inline: 20px; grid-template-columns: 1fr auto; }.atlas-header nav { display: none; }.atlas-wordmark span { display: none; }
   .atlas-hero { min-height: 920px; padding: 64px 20px 24px; display: block; }.hero-cartographer { inset: 64px 0 0; height: calc(100% - 64px); object-position: 63% center; }.paper-fade { inset: 64px 0 0; background: linear-gradient(180deg, rgba(242,238,228,.98) 4%, rgba(242,238,228,.78) 45%, rgba(242,238,228,.08) 75%, rgba(242,238,228,.92) 100%); }.hero-coordinate { position: absolute; top: 84px; right: 20px; }.hero-title { padding-top: 17vh; }.hero-title > .atlas-label { margin-bottom: 35px; }.hero-title h1 { font-size: clamp(58px, 16.5vw, 120px); }.atlas-hero-line.italic { padding-left: 0; }.hero-foot { position: absolute; right: 20px; bottom: 24px; left: 20px; }.hero-foot p { font-size: 7px; }
+  .hero-sequence { height: 205svh; min-height: 1450px; }.hero-sequence.is-static { height: 100svh; min-height: 760px; }.hero-sequence-fallback, .hero-sequence-canvas { inset: 64px 0 0; height: calc(100% - 64px); }.hero-sequence-fallback { object-position: 65% center; }.hero-sequence .hero-coordinate { top: 84px; right: 20px; }.hero-sequence .hero-title { top: 17vh; right: 20px; left: 20px; width: auto; }.hero-sequence-copy { width: min(330px,76%); margin: 24px 0 0; font-size: 12px; }.hero-sequence .hero-foot { right: 20px; bottom: 24px; left: 20px; }.hero-frame-rail { right: 20px; bottom: 82px; left: 20px; }.hero-sequence::after { display: none; }
   .coordinates-section { min-height: 980px; padding-top: 120px; display: block; }.coordinate-index { display: flex; }.coordinate-statement { margin-top: 120px; }.coordinate-statement h2 { font-size: 13.6vw; }.coordinate-statement > p:last-child { margin-left: 23%; font-size: 15px; }.coordinate-note { width: 60%; margin: 100px 0 0; }.coordinate-compass { right: -26vw; bottom: 3vh; width: 66vw; }
   .work-marker { min-height: 650px; padding-top: 120px; display: block; }.work-marker h2 { margin-top: 80px; font-size: 14vw; }
   .story-chapter, .story-chapter.reverse { height: auto; min-height: 0; background: var(--paper-deep); color: var(--ink); }.story-chapter.reverse { background: var(--indigo); color: var(--paper); }.chapter-sticky { position: relative; height: auto; min-height: 0; padding: 92px 20px 80px; display: flex; flex-direction: column; }.chapter-visual, .reverse .chapter-visual { width: 100%; height: 58vw; min-height: 310px; order: 1; }.chapter-copy, .reverse .chapter-copy { width: 100%; padding: 0; order: 2; }.chapter-copy > .atlas-label { margin-top: 40px; }.chapter-copy h2 { font-size: 12vw; }.chapter-copy ol { margin-top: 55px; }.chapter-copy button { margin-top: 30px; }.reverse .chapter-copy > .atlas-label { color: #cbd4f2; }
@@ -190,6 +207,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 480px) {
   .sound-toggle span { display: none; }
   .atlas-hero { min-height: 820px; }.hero-title { padding-top: 19vh; }.hero-title h1 { font-size: 13.1vw; letter-spacing: -.055em; }.hero-foot a { gap: 12px; }
+  .hero-sequence { min-height: 1280px; }.hero-sequence.is-static { min-height: 720px; }.hero-sequence .hero-title { top: 16vh; }.hero-sequence .hero-title h1 { font-size: 13.1vw; letter-spacing: -.055em; }.hero-sequence .hero-foot p { display: none; }.hero-sequence .hero-foot a { margin-left: auto; gap: 12px; }.hero-sequence-copy { width: 74%; font-size: 11px; }
   .coordinate-statement h2, .work-marker h2, .practice-heading h2, .field-heading h2 { font-size: 14.5vw; }
   .chapter-visual, .reverse .chapter-visual { height: 68vw; min-height: 270px; }.chapter-caption { font-size: 6px; }.chapter-copy h2 { font-size: 13.4vw; }
   .field-timeline article { grid-template-columns: 62px 1fr; }.contact-email { font-size: 13px; }
@@ -199,6 +217,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .chapter-plate, .field-line { transform: none !important; }
+  .hero-sequence { height: 100svh; min-height: 760px; }.hero-frame-rail { display: none; }
   .route-canvas { opacity: .35; }
 }
 

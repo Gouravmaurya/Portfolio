@@ -6,6 +6,7 @@ import type { CaseSlug } from "@/types/content";
 import { useExperience } from "./experience-provider";
 import { RouteCanvas } from "./route-canvas";
 import { CaseOverlay } from "./case-overlay";
+import { HeroFramePrototype } from "./hero-frame-prototype";
 
 type OverlayKey = CaseSlug | "colophon";
 
@@ -85,19 +86,7 @@ export function HomeExperience() {
     <main id="main" ref={root} className="atlas-main" data-page-shell>
       <RouteCanvas />
 
-      <section className="atlas-hero" id="top" aria-labelledby="atlas-title">
-        <img className="hero-cartographer" src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
-        <div className="paper-fade" aria-hidden="true" />
-        <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
-        <div className="hero-title" id="atlas-title">
-          <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
-          <h1><span className="atlas-hero-line"><span>The atlas of</span></span><span className="atlas-hero-line italic"><span>useful</span></span><span className="atlas-hero-line"><span>intelligence</span></span></h1>
-        </div>
-        <div className="hero-foot">
-          <p>Full-stack AI engineer<br />Creative developer</p>
-          <a href="#coordinates">Begin the route <span aria-hidden="true">↓</span></a>
-        </div>
-      </section>
+      <HeroFramePrototype motion={motion} />
 
       <section className="coordinates-section atlas-grid" id="coordinates">
         <div className="coordinate-index"><span>01</span><p>Coordinates<br />India / Available worldwide</p></div>
