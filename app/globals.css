@@ -70,11 +70,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .scroll-prologue { position: relative; height: 520svh; min-height: 3400px; background: var(--paper); }
 .prologue-sticky { position: sticky; top: 0; height: 100svh; min-height: 680px; overflow: hidden; }
 .morph-scene { position: absolute; z-index: 0; inset: 72px 0 0; margin: 0; overflow: hidden; background: var(--paper); will-change: clip-path; }
-.morph-scene img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; transform-origin: 68% 54%; will-change: transform; }
-.morph-scene-projects { z-index: 1; }
-.morph-scene-skills { z-index: 2; }
-.morph-scene-experience { z-index: 3; }
+.morph-scene img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; transform-origin: 68% 54%; will-change: transform, filter, opacity; }
+.morph-scene-projects { z-index: 1; clip-path: polygon(68% 47%, 73% 48%, 76% 52%, 75% 57%, 71% 61%, 66% 59%, 64% 54%, 65% 50%); }
+.morph-scene-skills { z-index: 2; clip-path: polygon(56% 49%, 61% 48%, 65% 51%, 66% 55%, 62% 60%, 57% 61%, 54% 57%, 53% 53%); }
+.morph-scene-experience { z-index: 3; clip-path: polygon(57% 43%, 62% 42%, 66% 45%, 67% 50%, 63% 54%, 58% 55%, 55% 51%, 54% 47%); }
 .morph-wash { position: absolute; z-index: 4; inset: 72px 0 0; pointer-events: none; background: linear-gradient(90deg, rgba(242,238,228,.98) 0%, rgba(242,238,228,.93) 24%, rgba(242,238,228,.58) 43%, rgba(242,238,228,.08) 68%, transparent 82%); }
+.morph-pulse { position: absolute; z-index: 5; top: 54%; left: 68%; width: clamp(150px,18vw,280px); aspect-ratio: 1; pointer-events: none; mix-blend-mode: multiply; transform: translate(-50%,-50%); will-change: transform, opacity; }
+.morph-pulse i { position: absolute; border: 1px solid rgba(41,59,120,.55); border-radius: 43% 57% 52% 48% / 55% 42% 58% 45%; }
+.morph-pulse i:first-child { inset: 0; transform: rotate(12deg); }.morph-pulse i:nth-child(2) { inset: 16%; border-color: rgba(41,59,120,.38); transform: rotate(-18deg); }.morph-pulse i:last-child { inset: 34%; border-color: rgba(41,59,120,.7); transform: rotate(34deg); }
 .scroll-prologue .hero-coordinate { position: absolute; z-index: 5; top: 106px; right: clamp(24px,4vw,64px); padding: 0; }
 .scroll-prologue .hero-title { position: absolute; z-index: 6; top: 22%; left: clamp(24px,4vw,64px); width: min(66vw, 980px); padding: 0; }
 .scroll-prologue .hero-foot { position: absolute; z-index: 5; right: clamp(24px,4vw,64px); bottom: 34px; left: clamp(24px,4vw,64px); }

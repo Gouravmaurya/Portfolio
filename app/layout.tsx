@@ -1,14 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Manrope, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ExperienceProvider } from "@/components/experience-provider";
 import { SiteChrome } from "@/components/site-chrome";
 
-const newsreader = Newsreader({ subsets: ["latin"], variable: "--font-editorial", display: "swap" });
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+const newsreader = localFont({
+  src: [
+    { path: "./fonts/Newsreader-Variable.ttf", style: "normal", weight: "200 800" },
+    { path: "./fonts/Newsreader-Italic-Variable.ttf", style: "italic", weight: "200 800" },
+  ],
+  variable: "--font-editorial",
+  display: "swap",
+});
+const manrope = localFont({ src: "./fonts/Manrope-Variable.ttf", variable: "--font-sans", weight: "200 800", display: "swap" });
+const plexMono = localFont({
+  src: [
+    { path: "./fonts/IBMPlexMono-Regular.ttf", weight: "400" },
+    { path: "./fonts/IBMPlexMono-Medium.ttf", weight: "500" },
+  ],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gouravmaurya.vercel.app"),

@@ -59,31 +59,44 @@ export function HomeExperience() {
         const phaseItems = gsap.utils.toArray<HTMLElement>(".morph-phase");
         if (morphScenes.length === 4 && morphCopies.length === 4 && phaseItems.length === 4) {
           gsap.set(morphScenes.slice(1), { autoAlpha: 1 });
-          gsap.set(morphScenes[1], { clipPath: "inset(0 0 0 100%)" });
-          gsap.set(morphScenes[2], { clipPath: "inset(100% 0 0 0)" });
-          gsap.set(morphScenes[3], { clipPath: "inset(0 100% 0 0)" });
+          gsap.set(morphScenes[1], { clipPath: "polygon(68% 47%, 73% 48%, 76% 52%, 75% 57%, 71% 61%, 66% 59%, 64% 54%, 65% 50%)" });
+          gsap.set(morphScenes[2], { clipPath: "polygon(56% 49%, 61% 48%, 65% 51%, 66% 55%, 62% 60%, 57% 61%, 54% 57%, 53% 53%)" });
+          gsap.set(morphScenes[3], { clipPath: "polygon(57% 43%, 62% 42%, 66% 45%, 67% 50%, 63% 54%, 58% 55%, 55% 51%, 54% 47%)" });
+          gsap.set(morphScenes.slice(1).map((scene) => scene.querySelector("img")), { filter: "blur(14px)", opacity: 0.3, scale: 1.075 });
           gsap.set(morphCopies.slice(1), { autoAlpha: 0, y: 34 });
           gsap.set(phaseItems.slice(1), { opacity: 0.34 });
+          gsap.set(".morph-pulse", { autoAlpha: 0, scale: 0.45 });
 
           const prologue = gsap.timeline({ scrollTrigger: { trigger: ".scroll-prologue", start: "top top", end: "bottom bottom", scrub: motion === "reduced" ? 0.2 : 0.8 } });
           prologue
             .to(morphScenes[0].querySelector("img"), { scale: 1.045, duration: 0.24, ease: "none" }, 0)
             .to(morphCopies[0], { autoAlpha: 0, y: -32, duration: 0.08 }, 0.12)
             .to(phaseItems[0], { opacity: 0.34, duration: 0.05 }, 0.14)
-            .to(morphScenes[1], { clipPath: "inset(0 0 0 0%)", duration: 0.16, ease: "power2.inOut" }, 0.16)
-            .fromTo(morphScenes[1].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.16)
+            .to(morphScenes[0].querySelector("img"), { filter: "blur(9px)", opacity: 0.2, scale: 1.065, duration: 0.19, ease: "power1.inOut" }, 0.15)
+            .to(morphScenes[1], { clipPath: "polygon(0% 0%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%)", duration: 0.19, ease: "power1.inOut" }, 0.15)
+            .to(morphScenes[1].querySelector("img"), { filter: "blur(0px)", opacity: 1, scale: 1, duration: 0.19, ease: "power1.inOut" }, 0.15)
+            .to(".morph-pulse", { autoAlpha: 0.5, scale: 1, duration: 0.07 }, 0.15)
+            .to(".morph-pulse", { autoAlpha: 0, scale: 1.75, duration: 0.12 }, 0.22)
             .to(morphCopies[1], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.24)
             .to(phaseItems[1], { opacity: 1, duration: 0.06 }, 0.22)
             .to(morphCopies[1], { autoAlpha: 0, y: -32, duration: 0.07 }, 0.37)
             .to(phaseItems[1], { opacity: 0.34, duration: 0.05 }, 0.39)
-            .to(morphScenes[2], { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power2.inOut" }, 0.41)
-            .fromTo(morphScenes[2].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.41)
+            .to(morphScenes[1].querySelector("img"), { filter: "blur(9px)", opacity: 0.2, scale: 1.065, duration: 0.19, ease: "power1.inOut" }, 0.4)
+            .to(morphScenes[2], { clipPath: "polygon(0% 0%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%)", duration: 0.19, ease: "power1.inOut" }, 0.4)
+            .to(morphScenes[2].querySelector("img"), { filter: "blur(0px)", opacity: 1, scale: 1, duration: 0.19, ease: "power1.inOut" }, 0.4)
+            .set(".morph-pulse", { scale: 0.45 }, 0.4)
+            .to(".morph-pulse", { autoAlpha: 0.5, scale: 1, duration: 0.07 }, 0.4)
+            .to(".morph-pulse", { autoAlpha: 0, scale: 1.75, duration: 0.12 }, 0.47)
             .to(morphCopies[2], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.49)
             .to(phaseItems[2], { opacity: 1, duration: 0.06 }, 0.47)
             .to(morphCopies[2], { autoAlpha: 0, y: -32, duration: 0.07 }, 0.62)
             .to(phaseItems[2], { opacity: 0.34, duration: 0.05 }, 0.64)
-            .to(morphScenes[3], { clipPath: "inset(0 0% 0 0)", duration: 0.16, ease: "power2.inOut" }, 0.66)
-            .fromTo(morphScenes[3].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.66)
+            .to(morphScenes[2].querySelector("img"), { filter: "blur(9px)", opacity: 0.2, scale: 1.065, duration: 0.19, ease: "power1.inOut" }, 0.65)
+            .to(morphScenes[3], { clipPath: "polygon(0% 0%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%)", duration: 0.19, ease: "power1.inOut" }, 0.65)
+            .to(morphScenes[3].querySelector("img"), { filter: "blur(0px)", opacity: 1, scale: 1, duration: 0.19, ease: "power1.inOut" }, 0.65)
+            .set(".morph-pulse", { scale: 0.45 }, 0.65)
+            .to(".morph-pulse", { autoAlpha: 0.5, scale: 1, duration: 0.07 }, 0.65)
+            .to(".morph-pulse", { autoAlpha: 0, scale: 1.75, duration: 0.12 }, 0.72)
             .to(morphCopies[3], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.74)
             .to(phaseItems[3], { opacity: 1, duration: 0.06 }, 0.72)
             .to(".prologue-meter span", { scaleY: 1, duration: 1, ease: "none" }, 0);
@@ -136,6 +149,7 @@ export function HomeExperience() {
             <img src="/atlas/experience-morph-v2.webp" alt="" />
           </figure>
           <div className="morph-wash" aria-hidden="true" />
+          <div className="morph-pulse" aria-hidden="true"><i /><i /><i /></div>
           <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
           <div className="hero-title morph-copy" id="atlas-title">
             <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
