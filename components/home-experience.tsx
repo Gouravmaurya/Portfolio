@@ -160,10 +160,18 @@ export function HomeExperience() {
             ease: "none",
             scrollTrigger: { trigger: ".work-expedition", start: "top top", end: "bottom bottom", scrub: 0.5 },
           });
-          gsap.utils.toArray<HTMLElement>(".project-panel").forEach((panel, index) => {
+          const projectPanels = gsap.utils.toArray<HTMLElement>(".project-panel");
+          const depthTimeline = gsap.timeline({
+            scrollTrigger: { trigger: ".work-expedition", start: "top top", end: "bottom bottom", scrub: 0.9 },
+          });
+          projectPanels.forEach((panel, index) => {
             const image = panel.querySelector<HTMLElement>(".project-panel-image img");
             const orbit = panel.querySelector<HTMLElement>(".project-orbit");
-            if (image) gsap.fromTo(image, { scale: 1.15, xPercent: index % 2 ? -5 : 5 }, { scale: 1, xPercent: index % 2 ? 4 : -4, ease: "none", scrollTrigger: { trigger: ".work-expedition", start: "top top", end: "bottom bottom", scrub: 1 } });
+            const arrive = 0.18 + index * 0.34;
+            depthTimeline
+              .fromTo(panel, { rotateY: 7, rotateZ: index ? 1.1 : -1.1, scale: 0.91 }, { rotateY: 0, rotateZ: 0, scale: 1, duration: 0.18, ease: "power1.out" }, arrive)
+              .to(panel, { rotateY: -5, rotateZ: index ? -0.7 : 0.7, scale: 0.955, duration: 0.16, ease: "power1.in" }, arrive + 0.2);
+            if (image) gsap.fromTo(image, { scale: 1.12, xPercent: index % 2 ? -4 : 4 }, { scale: 1.02, xPercent: index % 2 ? 3 : -3, ease: "none", scrollTrigger: { trigger: ".work-expedition", start: "top top", end: "bottom bottom", scrub: 1 } });
             if (orbit) gsap.to(orbit, { rotate: index % 2 ? -180 : 180, ease: "none", scrollTrigger: { trigger: ".work-expedition", start: "top top", end: "bottom bottom", scrub: 1.2 } });
           });
         }
