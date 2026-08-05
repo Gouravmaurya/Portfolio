@@ -54,28 +54,38 @@ export function HomeExperience() {
         gsap.from(".atlas-hero-line > span", { yPercent: 112, rotate: 1.5, duration: 1.15, stagger: 0.09, ease: "power4.out" });
         gsap.from(".hero-coordinate, .hero-foot", { opacity: 0, y: 16, duration: 0.75, stagger: 0.12, delay: 0.65 });
 
-        const beats = gsap.utils.toArray<HTMLElement>(".prologue-beat");
-        if (beats.length === 4) {
-          gsap.set(beats, { autoAlpha: 0, y: 30 });
-          const prologue = gsap.timeline({ scrollTrigger: { trigger: ".scroll-prologue", start: "top top", end: "bottom bottom", scrub: motion === "reduced" ? 0.2 : 0.85 } });
+        const morphScenes = gsap.utils.toArray<HTMLElement>(".morph-scene");
+        const morphCopies = gsap.utils.toArray<HTMLElement>(".morph-copy");
+        const phaseItems = gsap.utils.toArray<HTMLElement>(".morph-phase");
+        if (morphScenes.length === 4 && morphCopies.length === 4 && phaseItems.length === 4) {
+          gsap.set(morphScenes.slice(1), { autoAlpha: 1 });
+          gsap.set(morphScenes[1], { clipPath: "inset(0 0 0 100%)" });
+          gsap.set(morphScenes[2], { clipPath: "inset(100% 0 0 0)" });
+          gsap.set(morphScenes[3], { clipPath: "inset(0 100% 0 0)" });
+          gsap.set(morphCopies.slice(1), { autoAlpha: 0, y: 34 });
+          gsap.set(phaseItems.slice(1), { opacity: 0.34 });
+
+          const prologue = gsap.timeline({ scrollTrigger: { trigger: ".scroll-prologue", start: "top top", end: "bottom bottom", scrub: motion === "reduced" ? 0.2 : 0.8 } });
           prologue
-            .to(".hero-title", { yPercent: -42, autoAlpha: 0, duration: 0.18, ease: "power2.in" }, 0)
-            .to(".prologue-base", { scale: 1.12, autoAlpha: 0.12, filter: "blur(2px)", duration: 0.9, ease: "none" }, 0)
-            .fromTo(".layer-table", { autoAlpha: 0, xPercent: -28, yPercent: 42, rotate: -8, scale: 0.74 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.08)
-            .to(beats[0], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.12)
-            .to(beats[0], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.23)
-            .to(beats[1], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.27)
-            .fromTo(".layer-cartographer", { autoAlpha: 0, xPercent: 36, yPercent: 16, rotate: 4, scale: 0.86 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.29)
-            .to(".layer-table", { xPercent: -18, yPercent: 8, rotate: -2, scale: 0.94, duration: 0.18 }, 0.36)
-            .to(beats[1], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.42)
-            .to(beats[2], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.46)
-            .fromTo(".layer-instruments", { autoAlpha: 0, xPercent: -42, yPercent: -18, rotate: -18, scale: 0.72 }, { autoAlpha: 1, xPercent: 0, yPercent: 0, rotate: 0, scale: 1, duration: 0.22, ease: "power2.out" }, 0.5)
-            .to(".layer-cartographer", { xPercent: 12, yPercent: 3, rotate: 1.5, duration: 0.18 }, 0.56)
-            .to(beats[2], { autoAlpha: 0, y: -24, duration: 0.07 }, 0.63)
-            .to(beats[3], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.68)
-            .to(".layer-table", { xPercent: -6, yPercent: 0, rotate: 0, scale: 1, duration: 0.24 }, 0.72)
-            .to(".layer-cartographer", { xPercent: 0, yPercent: 0, rotate: 0, duration: 0.24 }, 0.72)
-            .to(".layer-instruments", { xPercent: 8, yPercent: 8, rotate: 8, scale: 0.88, duration: 0.24 }, 0.72)
+            .to(morphScenes[0].querySelector("img"), { scale: 1.045, duration: 0.24, ease: "none" }, 0)
+            .to(morphCopies[0], { autoAlpha: 0, y: -32, duration: 0.08 }, 0.12)
+            .to(phaseItems[0], { opacity: 0.34, duration: 0.05 }, 0.14)
+            .to(morphScenes[1], { clipPath: "inset(0 0 0 0%)", duration: 0.16, ease: "power2.inOut" }, 0.16)
+            .fromTo(morphScenes[1].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.16)
+            .to(morphCopies[1], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.24)
+            .to(phaseItems[1], { opacity: 1, duration: 0.06 }, 0.22)
+            .to(morphCopies[1], { autoAlpha: 0, y: -32, duration: 0.07 }, 0.37)
+            .to(phaseItems[1], { opacity: 0.34, duration: 0.05 }, 0.39)
+            .to(morphScenes[2], { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power2.inOut" }, 0.41)
+            .fromTo(morphScenes[2].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.41)
+            .to(morphCopies[2], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.49)
+            .to(phaseItems[2], { opacity: 1, duration: 0.06 }, 0.47)
+            .to(morphCopies[2], { autoAlpha: 0, y: -32, duration: 0.07 }, 0.62)
+            .to(phaseItems[2], { opacity: 0.34, duration: 0.05 }, 0.64)
+            .to(morphScenes[3], { clipPath: "inset(0 0% 0 0)", duration: 0.16, ease: "power2.inOut" }, 0.66)
+            .fromTo(morphScenes[3].querySelector("img"), { scale: 1.035 }, { scale: 1, duration: 0.2, ease: "none" }, 0.66)
+            .to(morphCopies[3], { autoAlpha: 1, y: 0, duration: 0.08 }, 0.74)
+            .to(phaseItems[3], { opacity: 1, duration: 0.06 }, 0.72)
             .to(".prologue-meter span", { scaleY: 1, duration: 1, ease: "none" }, 0);
         }
 
@@ -113,26 +123,53 @@ export function HomeExperience() {
 
       <section className="scroll-prologue" id="top" aria-labelledby="atlas-title" data-scroll-story>
         <div className="prologue-sticky atlas-grid">
-          <img className="prologue-base" src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
-          <div className="prologue-wash" aria-hidden="true" />
-          <img className="prologue-cutout layer-table" src="/atlas/layers/drafting-table-cutout.webp" alt="" aria-hidden="true" />
-          <img className="prologue-cutout layer-cartographer" src="/atlas/layers/cartographer-cutout.webp" alt="" aria-hidden="true" />
-          <img className="prologue-cutout layer-instruments" src="/atlas/layers/instruments-cutout.webp" alt="" aria-hidden="true" />
+          <figure className="morph-scene morph-scene-self">
+            <img src="/atlas/cartographer-hero.webp" alt="A faceless cartographer beginning a hand-drawn atlas at a drafting table" fetchPriority="high" />
+          </figure>
+          <figure className="morph-scene morph-scene-projects" aria-hidden="true">
+            <img src="/atlas/projects-morph-v2.webp" alt="" />
+          </figure>
+          <figure className="morph-scene morph-scene-skills" aria-hidden="true">
+            <img src="/atlas/skills-morph-v2.webp" alt="" />
+          </figure>
+          <figure className="morph-scene morph-scene-experience" aria-hidden="true">
+            <img src="/atlas/experience-morph-v2.webp" alt="" />
+          </figure>
+          <div className="morph-wash" aria-hidden="true" />
           <p className="hero-coordinate">28.6139° N<br />77.2090° E</p>
-          <div className="hero-title" id="atlas-title">
+          <div className="hero-title morph-copy" id="atlas-title">
             <p className="atlas-label">Gourav Maurya / Portfolio 2026</p>
             <h1><span className="atlas-hero-line"><span>The atlas of</span></span><span className="atlas-hero-line italic"><span>useful</span></span><span className="atlas-hero-line"><span>intelligence</span></span></h1>
+            <p className="morph-summary">Full-stack AI engineer and creative developer mapping complex ideas into useful products.</p>
           </div>
-          <div className="prologue-story" aria-label="How I build products">
-            <article className="prologue-beat"><span>00 / Uncharted</span><h2>Every useful system begins as uncertain territory.</h2><p>Scroll to separate the map into the disciplines behind my work.</p></article>
-            <article className="prologue-beat"><span>01 / Interface</span><h2>I make complex inputs feel immediate.</h2><p>Clear product surfaces, purposeful interaction and frontend engineering reveal the next decision.</p></article>
-            <article className="prologue-beat"><span>02 / Systems</span><h2>I connect every visible choice to a dependable system.</h2><p>Application logic, APIs and data move together as one maintainable product route.</p></article>
-            <article className="prologue-beat"><span>03 / Intelligence</span><h2>I shape AI around human judgement.</h2><p>Visible state, structured workflows and useful control turn model capability into a product people can trust.</p></article>
+          <div className="morph-copy morph-chapter morph-chapter-projects">
+            <span>01 / Selected projects</span>
+            <h2>Products turn uncertainty into a route people can use.</h2>
+            <p>Haven maps property decisions. Safar connects intent, place and itinerary.</p>
+            <a href="#territory">Explore projects <i aria-hidden="true">→</i></a>
           </div>
+          <div className="morph-copy morph-chapter morph-chapter-skills">
+            <span>02 / Skills &amp; practice</span>
+            <h2>Interface, systems and intelligence work as one instrument.</h2>
+            <p>React and Next.js on the surface. APIs and data underneath. AI shaped around human control.</p>
+            <a href="#instruments">View instruments <i aria-hidden="true">→</i></a>
+          </div>
+          <div className="morph-copy morph-chapter morph-chapter-experience">
+            <span>03 / Experience</span>
+            <h2>Each role leaves a clearer trail for the next build.</h2>
+            <p>Independent product work, software engineering and full-stack AI product delivery.</p>
+            <a href="#field-notes">Follow the trail <i aria-hidden="true">→</i></a>
+          </div>
+          <ol className="morph-phases" aria-label="Portfolio chapters">
+            <li className="morph-phase"><span>00</span>Self</li>
+            <li className="morph-phase"><span>01</span>Projects</li>
+            <li className="morph-phase"><span>02</span>Skills</li>
+            <li className="morph-phase"><span>03</span>Experience</li>
+          </ol>
           <div className="prologue-meter" aria-hidden="true"><span /></div>
           <div className="hero-foot">
             <p>Full-stack AI engineer<br />Creative developer</p>
-            <a href="#coordinates">Enter the atlas <span aria-hidden="true">↓</span></a>
+            <a href="#coordinates">Enter the detailed atlas <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </section>

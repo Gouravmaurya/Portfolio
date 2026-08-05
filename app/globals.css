@@ -66,26 +66,31 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-foot a { display: flex; gap: 44px; align-items: center; font: 500 9px var(--mono); text-transform: uppercase; }
 .hero-foot a span { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; color: var(--indigo); }
 
-/* Scroll prologue — layered paper-cut animation */
-.scroll-prologue { position: relative; height: 430svh; min-height: 2800px; background: var(--paper); }
+/* Scroll prologue — one aligned world morphing through four chapters */
+.scroll-prologue { position: relative; height: 520svh; min-height: 3400px; background: var(--paper); }
 .prologue-sticky { position: sticky; top: 0; height: 100svh; min-height: 680px; overflow: hidden; }
-.prologue-base { position: absolute; z-index: 0; inset: 72px 0 0; width: 100%; height: calc(100% - 72px); object-fit: cover; object-position: center; transform-origin: 62% 54%; will-change: transform, opacity, filter; }
-.prologue-wash { position: absolute; z-index: 1; inset: 72px 0 0; background: linear-gradient(90deg, rgba(242,238,228,.98) 0%, rgba(242,238,228,.9) 27%, rgba(242,238,228,.38) 52%, rgba(242,238,228,.05) 77%); }
-.prologue-cutout { position: absolute; z-index: 2; display: block; object-fit: contain; opacity: 0; filter: drop-shadow(0 28px 25px rgba(22,23,20,.18)); will-change: transform, opacity; }
-.layer-table { left: 15%; bottom: -14%; width: min(73vw, 1100px); }
-.layer-cartographer { right: -1%; bottom: -9%; width: min(34vw, 520px); height: 94vh; }
-.layer-instruments { top: 11%; right: 24%; width: min(29vw, 440px); }
+.morph-scene { position: absolute; z-index: 0; inset: 72px 0 0; margin: 0; overflow: hidden; background: var(--paper); will-change: clip-path; }
+.morph-scene img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; transform-origin: 68% 54%; will-change: transform; }
+.morph-scene-projects { z-index: 1; }
+.morph-scene-skills { z-index: 2; }
+.morph-scene-experience { z-index: 3; }
+.morph-wash { position: absolute; z-index: 4; inset: 72px 0 0; pointer-events: none; background: linear-gradient(90deg, rgba(242,238,228,.98) 0%, rgba(242,238,228,.93) 24%, rgba(242,238,228,.58) 43%, rgba(242,238,228,.08) 68%, transparent 82%); }
 .scroll-prologue .hero-coordinate { position: absolute; z-index: 5; top: 106px; right: clamp(24px,4vw,64px); padding: 0; }
-.scroll-prologue .hero-title { position: absolute; z-index: 4; top: 25%; left: clamp(24px,4vw,64px); width: min(66vw, 980px); padding: 0; }
+.scroll-prologue .hero-title { position: absolute; z-index: 6; top: 22%; left: clamp(24px,4vw,64px); width: min(66vw, 980px); padding: 0; }
 .scroll-prologue .hero-foot { position: absolute; z-index: 5; right: clamp(24px,4vw,64px); bottom: 34px; left: clamp(24px,4vw,64px); }
-.prologue-story { position: absolute; z-index: 4; top: 48%; left: clamp(24px,5.5vw,88px); width: min(35vw, 520px); min-height: 330px; pointer-events: none; }
-.prologue-beat { position: absolute; inset: 0 auto auto 0; width: 100%; opacity: 0; visibility: hidden; }
-.prologue-beat > span { display: block; color: var(--indigo); font: 500 9px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
-.prologue-beat h2 { margin-top: 20px; font-family: var(--serif); font-size: clamp(38px,4.3vw,66px); font-weight: 500; line-height: .94; letter-spacing: -.045em; }
-.prologue-beat p { max-width: 430px; margin-top: 24px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.morph-summary { width: min(390px, 70%); margin: 32px 0 0 17%; color: var(--muted); font-size: 14px; line-height: 1.55; text-transform: none; }
+.morph-chapter { position: absolute; z-index: 6; top: 29%; left: clamp(24px,5.5vw,88px); width: min(38vw, 560px); opacity: 0; visibility: hidden; }
+.morph-chapter > span { display: block; color: var(--indigo); font: 500 9px/1.4 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+.morph-chapter h2 { margin-top: 24px; font-family: var(--serif); font-size: clamp(46px,5vw,78px); font-weight: 500; line-height: .9; letter-spacing: -.05em; }
+.morph-chapter p { max-width: 430px; margin-top: 26px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.morph-chapter a { display: flex; align-items: center; justify-content: space-between; width: min(310px,100%); margin-top: 34px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 600 9px var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+.morph-chapter a i { color: var(--indigo); font: 18px/1 var(--sans); }
+.morph-phases { position: absolute; z-index: 7; right: clamp(38px,5.5vw,88px); bottom: 100px; display: grid; grid-template-columns: repeat(4,auto); gap: clamp(12px,2vw,34px); }
+.morph-phase { display: flex; gap: 8px; align-items: center; padding-top: 9px; border-top: 1px solid currentColor; font: 500 8px var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+.morph-phase span { color: var(--indigo); }
 .prologue-meter { position: absolute; z-index: 5; top: 22%; right: 24px; bottom: 22%; width: 1px; background: rgba(41,59,120,.16); }
 .prologue-meter span { position: absolute; inset: 0; display: block; background: var(--indigo); transform: scaleY(.02); transform-origin: top; }
-.scroll-prologue::after { content: "SCROLL / ASSEMBLE / UNDERSTAND"; position: absolute; z-index: 5; top: 50svh; right: 15px; color: var(--muted); font: 7px var(--mono); letter-spacing: .08em; writing-mode: vertical-rl; transform: translateY(-50%); }
+.scroll-prologue::after { content: "SCROLL / MORPH / ORIENT"; position: absolute; z-index: 5; top: 50svh; right: 15px; color: var(--muted); font: 7px var(--mono); letter-spacing: .08em; writing-mode: vertical-rl; transform: translateY(-50%); }
 
 /* Coordinates */
 .coordinates-section { min-height: 120svh; padding-top: 17vh; padding-bottom: 14vh; display: grid; grid-template-columns: repeat(12, 1fr); align-content: start; }
@@ -199,7 +204,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .atlas-grid { padding-inline: 20px; background-size: calc(100% - 40px) 100%; background-position: 20px 0; }
   .atlas-header { height: 64px; padding-inline: 20px; grid-template-columns: 1fr auto; }.atlas-header nav { display: none; }.atlas-wordmark span { display: none; }
   .atlas-hero { min-height: 920px; padding: 64px 20px 24px; display: block; }.hero-cartographer { inset: 64px 0 0; height: calc(100% - 64px); object-position: 63% center; }.paper-fade { inset: 64px 0 0; background: linear-gradient(180deg, rgba(242,238,228,.98) 4%, rgba(242,238,228,.78) 45%, rgba(242,238,228,.08) 75%, rgba(242,238,228,.92) 100%); }.hero-coordinate { position: absolute; top: 84px; right: 20px; }.hero-title { padding-top: 17vh; }.hero-title > .atlas-label { margin-bottom: 35px; }.hero-title h1 { font-size: clamp(58px, 16.5vw, 120px); }.atlas-hero-line.italic { padding-left: 0; }.hero-foot { position: absolute; right: 20px; bottom: 24px; left: 20px; }.hero-foot p { font-size: 7px; }
-  .scroll-prologue { height: 360svh; min-height: 2500px; }.prologue-sticky { min-height: 680px; }.prologue-base { inset: 64px 0 0; height: calc(100% - 64px); object-position: 63% center; }.prologue-wash { inset: 64px 0 0; background: linear-gradient(180deg, rgba(242,238,228,.95) 3%, rgba(242,238,228,.58) 43%, rgba(242,238,228,.24) 66%, rgba(242,238,228,.92) 100%); }.scroll-prologue .hero-coordinate { top: 84px; right: 20px; }.scroll-prologue .hero-title { top: 20vh; right: 20px; left: 20px; width: auto; padding: 0; }.scroll-prologue .hero-title > .atlas-label { margin-bottom: 35px; }.layer-table { left: -30%; bottom: -2%; width: 122vw; }.layer-cartographer { right: -24%; bottom: -5%; width: 70vw; height: 72vh; }.layer-instruments { top: 14%; right: -9%; width: 54vw; }.prologue-story { top: auto; right: 20px; bottom: 116px; left: 20px; width: auto; min-height: 260px; }.prologue-beat { padding: 20px; background: rgba(242,238,228,.84); backdrop-filter: blur(7px); }.prologue-beat h2 { font-size: clamp(30px,8vw,52px); }.prologue-beat p { max-width: 330px; font-size: 13px; }.scroll-prologue .hero-foot { right: 20px; bottom: 24px; left: 20px; }.prologue-meter { top: 19%; right: 8px; bottom: 20%; }.scroll-prologue::after { display: none; }
+  .scroll-prologue { height: 460svh; min-height: 2900px; }.prologue-sticky { min-height: 680px; }.morph-scene { inset: 64px 0 0; }.morph-scene img { object-position: 66% center; }.morph-wash { inset: 64px 0 0; background: linear-gradient(90deg, rgba(242,238,228,.97) 0%, rgba(242,238,228,.84) 38%, rgba(242,238,228,.26) 72%, transparent 90%); }.scroll-prologue .hero-coordinate { top: 84px; right: 20px; }.scroll-prologue .hero-title { top: 18vh; right: 20px; left: 20px; width: auto; padding: 0; }.scroll-prologue .hero-title > .atlas-label { margin-bottom: 35px; }.morph-summary { width: min(330px,70%); margin-top: 24px; }.morph-chapter { top: 25%; left: 20px; width: min(58vw,520px); }.morph-chapter h2 { font-size: clamp(38px,7vw,66px); }.morph-phases { right: 20px; bottom: 88px; gap: 14px; }.morph-phase { font-size: 7px; }.scroll-prologue .hero-foot { right: 20px; bottom: 24px; left: 20px; }.prologue-meter { top: 19%; right: 8px; bottom: 20%; }.scroll-prologue::after { display: none; }
   .coordinates-section { min-height: 980px; padding-top: 120px; display: block; }.coordinate-index { display: flex; }.coordinate-statement { margin-top: 120px; }.coordinate-statement h2 { font-size: 13.6vw; }.coordinate-statement > p:last-child { margin-left: 23%; font-size: 15px; }.coordinate-note { width: 60%; margin: 100px 0 0; }.coordinate-compass { right: -26vw; bottom: 3vh; width: 66vw; }
   .work-marker { min-height: 650px; padding-top: 120px; display: block; }.work-marker h2 { margin-top: 80px; font-size: 14vw; }
   .story-chapter, .story-chapter.reverse { height: auto; min-height: 0; background: var(--paper-deep); color: var(--ink); }.story-chapter.reverse { background: var(--indigo); color: var(--paper); }.chapter-sticky { position: relative; height: auto; min-height: 0; padding: 92px 20px 80px; display: flex; flex-direction: column; }.chapter-visual, .reverse .chapter-visual { width: 100%; height: 58vw; min-height: 310px; order: 1; }.chapter-copy, .reverse .chapter-copy { width: 100%; padding: 0; order: 2; }.chapter-copy > .atlas-label { margin-top: 40px; }.chapter-copy h2 { font-size: 12vw; }.chapter-copy ol { margin-top: 55px; }.chapter-copy button { margin-top: 30px; }.reverse .chapter-copy > .atlas-label { color: #cbd4f2; }
@@ -211,7 +216,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 480px) {
   .sound-toggle span { display: none; }
-  .atlas-hero { min-height: 820px; }.hero-title { padding-top: 19vh; }.hero-title h1 { font-size: 13.1vw; letter-spacing: -.055em; }.hero-foot a { gap: 12px; }.scroll-prologue .hero-title { top: 19vh; padding: 0; }.scroll-prologue .hero-foot a { gap: 12px; }.prologue-story { bottom: 105px; }.prologue-beat { padding: 16px; }.prologue-beat h2 { margin-top: 14px; font-size: 8.6vw; }.prologue-beat p { margin-top: 15px; font-size: 11px; }.layer-cartographer { right: -30%; width: 79vw; }.layer-instruments { right: -14%; width: 60vw; }
+  .atlas-hero { min-height: 820px; }.hero-title { padding-top: 19vh; }.hero-title h1 { font-size: 13.1vw; letter-spacing: -.055em; }.hero-foot a { gap: 12px; }.scroll-prologue .hero-title { top: 18vh; padding: 0; }.scroll-prologue .hero-foot p { display: none; }.scroll-prologue .hero-foot a { margin-left: auto; gap: 12px; }.morph-scene img { object-position: 70% center; }.morph-wash { background: linear-gradient(180deg, rgba(242,238,228,.78) 0%, rgba(242,238,228,.3) 43%, rgba(242,238,228,.74) 74%, rgba(242,238,228,.98) 100%); }.morph-summary { width: 78%; margin: 20px 0 0; font-size: 11px; }.morph-chapter { top: auto; right: 20px; bottom: 132px; left: 20px; width: auto; padding: 18px; background: rgba(242,238,228,.86); backdrop-filter: blur(8px); }.morph-chapter h2 { margin-top: 14px; font-size: 9.2vw; line-height: .92; }.morph-chapter p { margin-top: 14px; font-size: 11px; }.morph-chapter a { margin-top: 16px; padding: 8px 0; }.morph-phases { right: 20px; bottom: 86px; left: 20px; grid-template-columns: repeat(4,1fr); }.morph-phase { gap: 4px; font-size: 6px; }.morph-phase span { display: none; }
   .coordinate-statement h2, .work-marker h2, .practice-heading h2, .field-heading h2 { font-size: 14.5vw; }
   .chapter-visual, .reverse .chapter-visual { height: 68vw; min-height: 270px; }.chapter-caption { font-size: 6px; }.chapter-copy h2 { font-size: 13.4vw; }
   .field-timeline article { grid-template-columns: 62px 1fr; }.contact-email { font-size: 13px; }
@@ -222,7 +227,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .chapter-plate, .field-line { transform: none !important; }
   .route-canvas { opacity: .35; }
-  .scroll-prologue { height: 100svh; min-height: 820px; }.prologue-cutout { display: none; }.prologue-base { opacity: 1 !important; transform: none !important; filter: none !important; }.prologue-beat:first-child { opacity: 1; visibility: visible; transform: none !important; }.prologue-beat:not(:first-child) { display: none; }.prologue-meter { display: none; }
+  .scroll-prologue { height: 100svh; min-height: 820px; }.morph-scene:not(:first-child), .morph-chapter { display: none; }.morph-scene:first-child { clip-path: none !important; }.morph-scene img, .morph-copy { opacity: 1 !important; transform: none !important; }.prologue-meter { display: none; }
 }
 
 @media (forced-colors: active) {
