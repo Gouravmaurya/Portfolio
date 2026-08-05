@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { experience, practiceAreas, projects, scenes, socials } from "@/data/content";
 import type { CaseSlug } from "@/types/content";
 import { useExperience } from "./experience-provider";
@@ -47,16 +49,9 @@ export function HomeExperience() {
 
   useEffect(() => {
     if (motion === "static" || !root.current) return;
-    let cancelled = false;
-    let dispose = () => {};
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, triggerModule]) => {
-      if (cancelled || !root.current) return;
-      const gsap = gsapModule.default;
-      const ScrollTrigger = triggerModule.ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
       const context = gsap.context(() => {
         gsap.from(".atlas-hero-line > span", { yPercent: 112, rotate: 1.5, duration: 1.15, stagger: 0.09, ease: "power4.out" });
-        gsap.from(".prologue-base", { opacity: 0, scale: 1.04, y: 32, duration: 1.4, ease: "power3.out", delay: 0.18 });
         gsap.from(".hero-coordinate, .hero-foot", { opacity: 0, y: 16, duration: 0.75, stagger: 0.12, delay: 0.65 });
 
         const beats = gsap.utils.toArray<HTMLElement>(".prologue-beat");
@@ -97,10 +92,16 @@ export function HomeExperience() {
 
         gsap.to(".coordinate-compass", { rotate: 110, ease: "none", scrollTrigger: { trigger: "#coordinates", start: "top bottom", end: "bottom top", scrub: 1 } });
         gsap.to(".field-line", { scaleX: 1, transformOrigin: "left", ease: "none", scrollTrigger: { trigger: "#field-notes", start: "top 75%", end: "bottom 75%", scrub: 0.7 } });
-      }, root);
-      dispose = () => context.revert();
-    });
-    return () => { cancelled = true; dispose(); };
+    }, root);
+
+    // Images and variable fonts can change the long scroll scene's geometry
+    // after hydration. Refresh once the first frame has painted so the pinned
+    // timeline always receives valid start/end measurements.
+    const refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => {
+      window.cancelAnimationFrame(refreshFrame);
+      context.revert();
+    };
   }, [motion]);
 
   const haven = scenes.find((scene) => scene.id === "haven")!;
