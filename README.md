@@ -11,3 +11,7 @@ python -m http.server 4185 --directory dist
 ```
 
 Vercel is configured through `vercel.json` to publish `dist/` as a static site. No build step is required.
+
+## Interactive folio experiment
+
+The `experiment/interactive-folio` branch adds an optional, full-screen project folio. Visitors can open any work image, move through all four projects with the index, buttons, or arrow keys, and follow the original external project links. Escape and the close control return focus to the opener. The ordinary project links remain usable if JavaScript is unavailable; reduced-motion preferences remove the project reveal. The experiment was developed separately from the published site so it can be reviewed before release.
