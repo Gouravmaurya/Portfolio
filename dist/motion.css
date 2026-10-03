@@ -1,0 +1,167 @@
+/* Motion layer. Start states and interaction polish only — all timing now lives
+   in motion.js (GSAP). Colour, type and content are untouched. The header is
+   sticky; nothing else about the layout moves. */
+:root {
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-move: cubic-bezier(.62,0,.24,1);
+}
+
+/* Anchors go through Lenis in motion.js; this is the no-JS fallback. */
+html { scroll-padding-top: 24px; }
+
+/* --- 1. Opening sequence: start state only, GSAP drives the rest --- */
+/* html.intro is set by the inline head script before first paint, and removed
+   by motion.js once the sequence finishes or is skipped. */
+.intro .hero-photo { will-change: clip-path; }
+/* The lift is its own class because it must end when the photo lands, not when
+   the timeline does. While it is up, anything revealing underneath — MAURYA
+   most visibly, since its resting place sits right behind the photo — would
+   fade in behind the image and then jump forward the instant the lift dropped. */
+.intro-lift .hero-photo { z-index: 60; }
+.intro .hero-photo img { will-change: transform; }
+.intro:not(.intro-go) .hero-photo { opacity: 0; }
+.intro .dock, .intro .hero-top, .intro #hero-title, .intro .hero-intro, .intro .hero-aside,
+.intro .hero-bottom, .intro .surname, .intro .hero-photo figcaption { opacity: 0; }
+.intro #hero-title, .intro .hero-intro, .intro .hero-aside, .intro .surname { transform: translateY(20px); }
+.intro-skip {
+  position: fixed; right: 20px; bottom: 20px; z-index: 70;
+  padding: 11px 16px; border: 1px solid #ffffff4d; background: #23231fb3; color: #eeeae1;
+  font: 500 12px/1 var(--sans); letter-spacing: 1.4px; cursor: pointer;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.intro-skip:hover { background: var(--ink); }
+
+/* --- 2. Left dock (replaces the top header) --- */
+/* Floats over the sections rather than taking a column of its own, so the dark
+   sections keep bleeding to the page edge and the pinned work stage's width
+   maths is untouched. Labels are set vertically — the same device the hero
+   figcaption already uses, and it keeps the dock narrow enough to sit in the
+   existing gutter. */
+.dock {
+  position: fixed; left: 16px; top: 50%; transform: translateY(-50%); z-index: 50;
+  display: flex; flex-direction: column; align-items: center; gap: 26px;
+  padding: 20px 11px;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+}
+.dock-mark { font: 30px/1 var(--serif); letter-spacing: -5px; padding-right: 5px; }
+.dock-mark span { color: var(--accent); }
+.dock-links { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.dock-links a, .dock-contact {
+  position: relative; writing-mode: vertical-rl;
+  font-size: 13px; letter-spacing: 1.4px; padding: 2px 3px;
+  /* Vertical labels must not wrap: the dock is narrow along the block axis, so
+     a wrap breaks one label into two unreadable columns. */
+  white-space: nowrap;
+}
+.dock-links sup { color: var(--accent); font-size: 9px; margin-top: 4px; }
+.dock-contact { border-left: 1px solid var(--ink); padding-left: 9px; }
+.dock-contact > span { display: inline; }
+/* The underline runs with the text, so vertical labels get a vertical rule. */
+.dock-links a::after, .dock-contact::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: -4px; width: 1px;
+  background: currentColor; transform: scaleY(0); transform-origin: top;
+  transition: transform .18s var(--ease-out);
+}
+.dock-links a:hover::after, .dock-contact:hover::after { transform: scaleY(1); }
+
+/* Keep the dock clear of the content it floats over. */
+@media (min-width: 900px) {
+  :where(.work, .about, .experience, .contact) { padding-left: max(6%, 108px); }
+  .work { padding-left: max(6%, 108px); }
+  .hero { padding-left: max(4%, 108px); }
+}
+
+/* On a phone a left rail steals width and fights the thumb, so it docks to the
+   bottom and lies down. */
+@media (max-width: 899px) {
+  /* Pinned to both edges rather than centred on its own width: centring let the
+     bar grow wider than the viewport and hang off both sides. */
+  .dock {
+    left: 12px; right: 12px; top: auto; bottom: 14px; transform: none;
+    flex-direction: row; justify-content: space-between;
+    gap: 10px; padding: 9px 13px;
+  }
+  .dock-links { flex-direction: row; gap: 16px; }
+  .dock-links a, .dock-contact { writing-mode: horizontal-tb; font-size: 12px; }
+  .dock-mark { font-size: 24px; letter-spacing: -4px; padding-right: 4px; }
+  .dock-contact { border-left: 0; padding-left: 0; }
+  .dock-contact > span { display: inline; margin: 0 0 0 6px; }
+  .dock-links a::after, .dock-contact::after {
+    top: auto; bottom: -3px; left: 0; right: 0; width: auto; height: 1px;
+    transform: scaleX(0); transform-origin: left;
+  }
+  .dock-links a:hover::after, .dock-contact:hover::after { transform: scaleX(1); }
+}
+
+/* "SELECTED" needs its own box to rise in; it must not pick up the "WORK" accent. */
+.work .section-heading h2 > .r-line { color: inherit; display: inline-block; }
+
+/* --- Pinned horizontal work stage --- */
+/* This query is mirrored character-for-character in motion.js, so the layout and
+   the ScrollTrigger that drives it can never disagree about which mode we are in.
+   The min-height guard matters: the whole section has to fit one viewport while
+   pinned, and on a short laptop screen it does not — there it stays vertical. */
+@media (min-width: 900px) and (min-height: 700px) and (not (prefers-reduced-motion: reduce)) {
+  .work {
+    height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 0; padding-bottom: 0;
+  }
+  /* motion.js moves .section-heading into the track as its first panel. Stacking
+     it above instead would make the heading and the artwork compete for the same
+     one-viewport height budget, which forces the display type down on any normal
+     laptop. As a panel it keeps its size and simply scrolls away with the work. */
+  .work .project-grid > .section-heading {
+    flex: 0 0 auto; width: min(44vw, 540px);
+    display: block; margin: 0; align-self: center;
+  }
+  .work .project-grid > .section-heading h2 { font-size: clamp(60px, 7vw, 120px); }
+  .work .project-grid > .section-heading .work-intro {
+    max-width: none; margin-top: 22px; padding-bottom: 0;
+  }
+  .work .project-grid {
+    display: flex; flex-wrap: nowrap; align-items: start;
+    width: max-content; gap: 5vw;
+    will-change: transform;
+  }
+  /* Fixed panel widths keep the track's measured width independent of when the
+     lazy artwork finishes loading. */
+  .work .project { flex: 0 0 auto; width: min(40vw, 470px); margin: 0; }
+  .work .project-wide { width: min(56vw, 700px); }
+  .work .project-kicker { padding-bottom: 10px; }
+  .work .project-heading { padding-top: 14px; }
+  .work .project-wide .project-heading { padding-top: 14px; }
+  .work .project-description { margin-top: 12px; }
+  .work .tags { margin-top: 12px; }
+  .work .all-work { margin-top: 18px; padding-top: 16px; }
+}
+
+/* --- 3. Interaction polish (CSS: it needs no library) --- */
+.line-link, .resume, .email, .work .work-intro a { position: relative; }
+.line-link::after, .resume::after, .email::after,
+.work .work-intro a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease-out);
+}
+.line-link:hover::after, .resume:hover::after, .email:hover::after,
+.work .work-intro a:hover::after { transform: scaleX(1); }
+.line-link > span, .resume > span, .work .work-intro a > span,
+#copy-email > span { transition: transform .25s var(--ease-out); }
+.resume:hover > span, .work .work-intro a:hover > span,
+#copy-email:hover > span { transform: translate(3px,-3px); }
+.line-link:hover > span { transform: translate(3px,3px); }
+.contact-arrow { transition: transform .35s var(--ease-out); }
+
+/* --- Cursor ring (Motion springs; fine pointers only, added by motion.js) --- */
+/* difference blending is what makes it invert over the artwork. It never takes
+   pointer events, and the real cursor is left visible underneath. */
+.cursor-ring {
+  position: fixed; top: 0; left: 0; width: 26px; height: 26px;
+  margin: -13px 0 0 -13px; border: 1px solid var(--paper); border-radius: 50%;
+  pointer-events: none; z-index: 80; mix-blend-mode: difference;
+  will-change: transform;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) { .cursor-ring { display: none; } }
